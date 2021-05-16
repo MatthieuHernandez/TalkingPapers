@@ -1,0 +1,116 @@
+
+<% font_type = {
+  "note" => "secondary",
+  "question" => "primary",
+  "summary" => "success",
+  "code" => "warning",
+  "application" => "danger"
+} 
+
+note_cat = note.note_type.to_s.capitalize %>
+
+  <div class="card border-<%= font_type[note.note_type] %> mb-3 ">
+    <div class="card-header bg-<%= font_type[note.note_type] %> text-white">
+        Page <%== note.page_num %> // <%== note_cat %>
+        <% if query == "private" %>
+          <%= link_to "Edit", edit_note_path(article_id: article_id, id: note.id),
+             class: "mb-2 float-right card-link text-white" %>
+        <% else %>
+          <% if !current_user.nil? %>
+            <% if note.user_id == current_user.id %>
+              <%= link_to "Delete", note_path(article_id: article_id, id: note.id, query: "public"), method: :delete,
+                                  data: { confirm: "You sure?" }, class: "mb-2 float-right card-link text-white" %>
+            <% end %>
+          <% end %>
+        <% end %>
+    </div>
+      <div class="card-body text-<%= font_type[note.note_type] %> small text-truncate">
+        <%= kramdown(note.note_text).html_safe %>
+        <%= "[Image attached]" if note.image.attached? %>
+      </div>
+
+      <div class="card-footer">
+          <% if query == "private" %>
+          <%= link_to "Delete", note_path(article_id: article_id, id: note.id, query: "private"), method: :delete,
+                              data: { confirm: "You sure?" }, class: "mb-2 float-left card-link" %>
+          <% else %>
+            <% if !note.username.nil? and !note.is_anon %>
+                By <%= link_to note.username, user_path(id: note.user_id) %>
+            <% elsif note.is_anon %>
+                By Anonymous
+            <% end %>
+          <% end %>
+          
+          <a data-toggle="modal" href="#exampleModal<%= note.id %>" class="mb-2 float-right card-link">More</a>
+          
+      </div>
+
+  </div>
+
+
+<div class="modal fade" id="exampleModal<%= note.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Page <%== note.page_num %> // <%== note_cat %></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body small">
+        <%= kramdown(note.note_text).html_safe %>
+        <%= image_tag note.display_image if note.image.attached? %>
+        <% if note.image.attached?%></br><% end %>
+            <% if !note.username.nil? and !note.is_anon %>
+                By <%= link_to note.username, user_path(id: note.user_id) %>
+            <% elsif note.is_anon %>
+                By Anonymous
+            <% end %>
+          </br></br>
+
+        <% if query == "public" %>
+        <ul class = "modal_comments">
+          <h5>Comments</h5> 
+          <% if note.comments_texts.first.nil? %>
+            No comments yet! Click "Comment" below to add some.
+          <% else %>
+          <% note.comments_texts.each do |comment_text| %>
+            <li> <%== comment_text %>
+            <% end %>
+          </ul>
+        <% end %>
+        <% end %>
+
+      </div>
+      <div class="modal-footer justify-content-end">
+<!--         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+ -->        
+          <% if query == "private" %>
+            <%= form_with scope: :note, url: notes_path(article_id: @article.id) do |form| %>
+                <%= form.hidden_field :is_public, :value => true %>
+                <%= form.hidden_field :page_num, :value => note.page_num %>
+                <%= form.hidden_field :note_text, :value => note.note_text %>
+                <%= form.hidden_field :note_type, :value => note.note_type %>
+                <%= form.hidden_field :username, :value => current_user.name %>
+                <%= form.hidden_field :parent_note_id, :value => note.id %>
+
+    <%= form.label :is_anon, class: "checkbox-anon inline" do %>
+     <%= form.check_box :is_anon %>
+     <span>Stay anonymous</span>
+    <% end %> 
+
+
+                <%= form.submit 'Publish', class: "btn btn-outline-secondary mb-0", type: "submit", data: { disable_with: false }%>
+            <% end %>
+            <% else %>
+            <% if current_user.nil? %>
+             <%= link_to "Login to comment", login_path, class: 'btn btn-primary' %>
+            <% else %>
+          <%= button_to "Comment", note_path(id: note.id), class: "btn btn-secondary my-0", method: :get %>
+          <% end %>
+          <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+

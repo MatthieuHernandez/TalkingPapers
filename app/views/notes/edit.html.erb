@@ -1,0 +1,62 @@
+<% if logged_in? %>
+
+    <%= form_with scope: :note, url: note_path(article_id: @article.id), :method => :put do |form| %>
+
+    <div class="row h-50">
+
+
+      <div class="form-group col-md-8">
+<!--     dividing form up into divs causes problems, need to refresh to submit again
+ -->
+
+
+        <%= form.hidden_field :is_public, :value => false %>
+        <%= form.label :note_text, 'Take a note (Markdown and LaTeX [use $$ to start and end] supported):' %><br>
+        <%= form.text_area :note_text, size: "30x15", class: "form-control", id: "textInput" %>
+
+      </div>
+
+      <div class="form-group col-md-3 ml-2">
+          <label>Type </label><br/>
+
+          <%= form.radio_button :note_type, 'note', :checked => true  %>
+          <%= form.label :note_type, 'Note', :style => "display:inline" , class: 'badge badge-secondary' %>
+          <br/>
+          
+          <%= form.radio_button :note_type, 'question' %>
+          <%= form.label :note_type, 'Question', :style => "display:inline", class: 'badge badge-primary' %>
+
+          <br/>
+
+          <%= form.radio_button :note_type, 'summary' %>
+          <%= form.label :note_type, 'Summary', :style => "display:inline", class: 'badge badge-success' %>
+
+          <br/>
+
+          <%= form.radio_button :note_type, 'code' %>
+          <%= form.label :note_type, 'Code', :style => "display:inline", class: 'badge badge-warning' %>
+
+          <br/>
+
+          <%= form.radio_button :note_type, 'application' %>
+          <%= form.label :note_type, 'Application', :style => "display:inline", class: 'badge badge-danger' %>
+
+          <br/>
+          <br/>
+
+          <label>PDF page number </label><br/>
+          <%= form.number_field :page_num, :style => "display:inline", class: "form-control" %>
+
+          <p>
+            <%= form.submit class: "mb-2 btn btn-outline-secondary"%>
+          </p>
+
+
+      <% end %>
+
+
+  </div>
+
+</div>
+
+<% end %>

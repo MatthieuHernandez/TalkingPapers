@@ -1,0 +1,62 @@
+<% provide(:title, 'New comment') %>
+
+<div class="row">
+  <div class="col-md-8 offset-md-2">
+
+    <%= link_to "Back to public notes", article_path(:id => @note.article_id, :query => "public"), class: 'btn btn-secondary btn-block' %>
+  </br>
+
+  	<%== @note.note_text %>
+    <%if @note.image.attached? %>
+      </br>
+        <%= image_tag @note.display_image %>
+    <% end %>
+  </br></br>
+    <small>
+            <% if !@note.username.nil? and !@note.is_anon %>
+                By <%= link_to @note.username, user_path(id: @note.user_id) %>
+            <% elsif @note.is_anon %>
+                By Anonymous
+            <% end %>
+    </small>
+  </br></br>
+  	<div class="list-group">
+
+      <h5>Comments</h5>
+
+  		      <% @note_comments.each do |comment| %>
+
+    <div class="list-group-item">
+      
+
+      <p class="mb-1"><%== comment.comment_text %></p>
+    <small>
+            <% if !comment.username.nil? and !comment.is_anon %>
+                By <%= link_to comment.username, user_path(id: comment.user_id) %>
+            <% elsif comment.is_anon %>
+                By Anonymous
+            <% end %>
+    </small>
+      <div class = "float-right"> <small> <%== time_ago_in_words(comment.created_at) %> ago</small> </div>
+    </div>
+
+  		
+
+  		<% end %>
+  	</div>
+  </br>
+
+
+      <%= form_with scope: :comment, url: comments_path(note_id: @note.id) do |form| %>
+        <%= form.hidden_field :username, :value => current_user.name %>
+        <%= form.hidden_field :note_id, :value => @note.id %>
+        <%= form.hidden_field :user_id, :value => current_user.id %>
+        <%= form.text_area :comment_text, size: "20x10", class: "form-control", id: "textInput" %>
+        <%= form.label :is_anon, class: "checkbox-anon inline" do %>
+          <%= form.check_box :is_anon %>
+          <span>Stay anonymous</span>
+        <% end %> 
+        <%= form.submit 'Comment', class: "btn btn-primary", type: "submit", data: { disable_with: false }%>
+      <% end %> 
+  </div>
+</div>
