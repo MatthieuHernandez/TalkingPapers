@@ -22,6 +22,7 @@ gem 'webpacker',  '4.2.2'
 gem 'turbolinks', '5.2.1'
 gem 'jbuilder',   '2.10.0'
 gem 'bootsnap',   '1.4.6', require: false
+gem "aws-sdk-s3", require: false
 
 group :development, :test do
   gem 'sqlite3', '1.4.2'
@@ -46,9 +47,9 @@ group :test do
   gem 'guard-minitest',           '2.4.6'
 end
 
-group :production do
-  gem 'aws-sdk-s3', '1.46.0', require: false
-end
+#group :production do
+#  gem 'aws-sdk-s3', '1.46.0', require: false
+#end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 # Uncomment the following line if you're running Rails
