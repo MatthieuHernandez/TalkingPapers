@@ -1,10 +1,9 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails',      '6.0.3.2'
+gem 'rails',                      '6.1.3.2'
+gem 'pg', '~> 1.2', '>= 1.2.3'
 gem 'tzinfo-data'
-gem 'yarn',                       '0.1.1'
-gem 'pg',                         '1.2.3'
 gem 'image_processing',           '1.9.3'
 gem 'mini_magick',                '4.9.5'
 gem 'active_storage_validations', '0.8.2'
@@ -48,7 +47,6 @@ group :test do
 end
 
 group :production do
-  gem 'pg', '1.2.3'
   gem 'aws-sdk-s3', '1.46.0', require: false
 end
 
