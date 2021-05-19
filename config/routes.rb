@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get '/.well-known/acme-challenge/:id', to: "pages#letsencrypt", constraints: { id: /[a-z0-9_-]+/i }
   get 'password_resets/new'
   get 'password_resets/edit'
   get 'sessions/new'
