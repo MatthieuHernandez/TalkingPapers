@@ -2,9 +2,12 @@ class ApplicationController < ActionController::Base
 	include SessionsHelper
   before_action :set_cache_headers
 
-  
   def hello
     render html: "hello, world!"
+  end
+
+  def letsencrypt
+    render text: "#{params[:id]}.#{ENV['LETS_ENCRYPT_KEY']}"
   end
 
   private
