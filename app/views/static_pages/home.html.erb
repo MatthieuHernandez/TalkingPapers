@@ -2,104 +2,85 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class = "container">
   <div class="card">
+    <div class="col-sm-12"></div>
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#arxiv">Arxiv papers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#others">Non-arxiv papers</a>
+        </li>
+      </ul>
 
- <div class="col-sm-12"></div>
-
-
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" href="#arxiv">Arxiv papers</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#others">Non-arxiv papers</a>
-    </li>
-  </ul>
-
-  <!-- Tab panes -->
-  <div class="tab-content">
-    <div id="arxiv" class="container tab-pane active"><br>
-    	<p><center>Search for papers to see notes others have added or to add your own notes &#129299</center></p>
-     <%= form_with scope: :article, url: articles_path, class: "form-inline col-sm-8 offset-sm-2 mb-4", local: true do |f| %>
-     <%= f.hidden_field :is_arxiv, :value => true %>
-    <%= f.text_field :url, class: 'form-control col-sm-10 my-1', placeholder: "Enter arxiv link e.g. https://arxiv.org/abs/1406.2661"%>
-    <%= f.submit "Search", class: "btn btn-primary col-sm-2 my-1" %>
-    <% end %>
-    </div>
-    <div id="others" class="container tab-pane fade"><br>
-    	<p><center>Search for papers to see notes others have added or to add your own notes &#129299</center></p>
-    	<div class="col-sm-8 offset-sm-2 mb-4">
-
-					<%= form_with scope: :article, url: articles_path, local: true do |f| %>
-					<%= f.hidden_field :is_arxiv, :value => false %>
-					<%= f.label :url, 'Link to PDF' %>
-					<%= f.text_field :url, class: 'form-control', placeholder: "E.g. https://www.jmlr.org/papers/volume3/guyon03a/guyon03a.pdf"%>
-					<%= f.label :title, 'Title of paper' %>
-					<%= f.text_field :title, class: 'form-control', placeholder: "E.g. An Introduction to Variable and Feature Selection"%>			
-					<%= f.submit "Search", class: "btn btn-primary my-1 block" %>
-		
-    			<% end %>
-		</div>
-    </div>	
-  </div>
-<!-- 
-     <%= form_with scope: :article, url: articles_path, class: "form-inline col-sm-8 offset-sm-2 mb-4", local: true do |f| %>
-
+      <!-- Tab panes -->
       <div class="tab-content">
-        <div class="tab-pane active" id="one">
-    <%= f.text_field :url, class: 'form-control col-sm-10 my-1', placeholder: "Enter arxiv link e.g. https://arxiv.org/abs/1406.2661"%>
-    <%= f.submit "Search", class: "btn btn-primary col-sm-2 my-1" %>
+        <div id="arxiv" class="container tab-pane active"><br>
+          <p><center>Search for papers to see notes others have added or to add your own notes &#129299</center></p>
+        <%= form_with scope: :article, url: articles_path, class: "form-inline col-sm-8 offset-sm-2 mb-4", local: true do |f| %>
+        <%= f.hidden_field :is_arxiv, :value => true, id: "arxiv" %>
+        <%= f.text_field :url, class: 'form-control col-sm-10 my-1', id: "url1", placeholder: "Enter arxiv link e.g. https://arxiv.org/abs/1406.2661"%>
+        <%= f.submit "Search", class: "btn btn-primary col-sm-2 my-1" %>
+        <% end %>
+        </div>
+        <div id="others" class="container tab-pane fade"><br>
+          <p><center>Search for papers to see notes others have added or to add your own notes &#129299</center></p>
+          <div class="col-sm-8 offset-sm-2 mb-4">
+
+              <%= form_with scope: :article, url: articles_path, local: true do |f| %>
+              <%= f.hidden_field :is_arxiv, :value => false, id: "not_arxiv" %>
+              <%= f.label :url, 'Link to PDF' %>
+              <%= f.text_field :url, class: 'form-control', id: "url2", placeholder: "E.g. https://www.jmlr.org/papers/volume3/guyon03a/guyon03a.pdf"%>
+              <%= f.label :title, 'Title of paper' %>
+              <%= f.text_field :title, class: 'form-control', placeholder: "E.g. An Introduction to Variable and Feature Selection"%>			
+              <%= f.submit "Search", class: "btn btn-primary my-1 block" %>
+        
+              <% end %>
+        </div>
+      </div>	
+    </div>
 	</div>
 
-        <div class="tab-pane" id="two">
-    <%= f.text_field :url, class: 'form-control col-sm-10 my-1', placeholder: "test"%>
-    <%= f.submit "Search", class: "btn btn-primary col-sm-2 my-1" %>
-	</div>
 
-    <% end %>    -->
-
-	</div>
+  <div class="jumbotron vertical-top">
 
 
-<div class="jumbotron vertical-top">
+  &#8205;
+  <div class="search-container">
+    <input class="form-control" type="text" placeholder="Search..." name="search">
+    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+    </input>
+    
+  </div>
 
+  <div class="col-sm-12 my-3"><h5>Recently annotated papers</h5></div>
 
-&#8205;
-<div class="search-container">
-  <input class="form-control" type="text" placeholder="Search..." name="search">
-  <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
-  </input>
-  
-</div>
+      <% if !@recent_articles.empty? %>
 
- <div class="col-sm-12 my-3"><h5>Recently annotated papers</h5></div>
+    <% @recent_articles.each do |article| %>
+      <div class = "card my-1">
+        <div class = "card-text my-2 mx-2">
+      <%= link_to article.title, article_path(:id => article.article_id, query: "public")%> | 
+          <%= pluralize( article.num_notes, 'note') %>
 
-    <% if !@recent_articles.empty? %>
+        </div>
+        <div class="blockquote-footer mx-2 my-1">
+      <div class="float-right">
+        Last updated <%= time_ago_in_words(article.last_updated)   %> ago
 
-	<% @recent_articles.each do |article| %>
-		<div class = "card my-1">
-			<div class = "card-text my-2 mx-2">
-		<%= link_to article.title, article_path(:id => article.article_id, query: "public")%> | 
-				<%= pluralize( article.num_notes, 'note') %>
-
-			</div>
-			<div class="blockquote-footer mx-2 my-1">
-		 <div class="float-right">
-		 	Last updated <%= time_ago_in_words(article.last_updated)   %> ago
-
-		</div>
-		</div>
-			</div>
-	<% end %>
-
-    <% else %>
-
-      <div class="col-sm-12 my-3">No publicly annotated papers yet. Get started by searching for a paper!</div>
-
+      </div>
+      </div>
+        </div>
     <% end %>
 
+      <% else %>
+
+        <div class="col-sm-12 my-3">No publicly annotated papers yet. Get started by searching for a paper!</div>
+
+      <% end %>
 
 
-</div>
+
+  </div>
 </div>
 
