@@ -1,10 +1,9 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails',      '6.0.3.2'
+gem 'rails',                      '6.1.3.2'
+gem 'pg', '~> 1.2', '>= 1.2.3'
 gem 'tzinfo-data'
-gem 'yarn',                       '0.1.1'
-gem 'pg',                         '1.2.3'
 gem 'image_processing',           '1.9.3'
 gem 'mini_magick',                '4.9.5'
 gem 'active_storage_validations', '0.8.2'
@@ -23,6 +22,7 @@ gem 'webpacker',  '4.2.2'
 gem 'turbolinks', '5.2.1'
 gem 'jbuilder',   '2.10.0'
 gem 'bootsnap',   '1.4.6', require: false
+gem "aws-sdk-s3", require: false
 
 group :development, :test do
   gem 'sqlite3', '1.4.2'
@@ -47,10 +47,9 @@ group :test do
   gem 'guard-minitest',           '2.4.6'
 end
 
-group :production do
-  gem 'pg', '1.2.3'
-  gem 'aws-sdk-s3', '1.46.0', require: false
-end
+#group :production do
+#  gem 'aws-sdk-s3', '1.46.0', require: false
+#end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 # Uncomment the following line if you're running Rails
