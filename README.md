@@ -8,14 +8,14 @@
 
 - Ruby on Rails
   - install [Ruby 2.7](https://www.ruby-lang.org/)
-  - `gem install rails`
-  - `gem install bundle`
-  - `run rails server`
+  - run `gem install rails`
+  - run `gem install bundle`
+  - clone the repository
+  - run `rails server` from talkingpaper GitHub folder
 - PostgreSQL
   - install postgres 12
   - initialize db
-  - `pg_ctl.exe start -D "C:\Program Files\PostgreSQL\12\data"`
-  - `pg_ctl -D "C:\Program Files\PostgreSQL\9.6\data" start`
+  - run `"C:\Program Files\PostgreSQL\12\bin\pg_ctl" -D "C:\Program Files\PostgreSQL\12\data" start`
 - `npm install --global yarn`
 
 - Go to http://127.0.0.1:3000/
