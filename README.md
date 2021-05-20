@@ -15,8 +15,7 @@
 - PostgreSQL
   - install postgres 12
   - initialize db
-  - run `pg_ctl.exe start -D "C:\Program Files\PostgreSQL\12\data"` from bin PostgreSQL folder
-  - run `pg_ctl -D "C:\Program Files\PostgreSQL\12\data" start` from bin PostgreSQL folder
+  - run `"C:\Program Files\PostgreSQL\12\bin\pg_ctl" -D "C:\Program Files\PostgreSQL\12\data" start`
 - `npm install --global yarn`
 
 - Go to http://127.0.0.1:3000/
