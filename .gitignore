@@ -42,3 +42,6 @@ yarn-debug.log*
 
 # Ignore script to start server in local on Windows
 local_start.bat
+
+# Ignore development evironment variables: DO NOT REMOVE, contains private passwords
+/app/config/app_evironment_variable.rb
