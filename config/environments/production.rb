@@ -68,12 +68,12 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: 'talkingpaper.org' }
   ActionMailer::Base.smtp_settings = {
-    :address        => ENV['MAILGUN_SMTP_SERVER'],
-    :port           => ENV['MAILGUN_SMTP_PORT'],
+    :address        => 'smtp.gmail.com',
+    :port           => 587,
+    :domain         => 'mail.google.com',
+    :user_name      => 'talkingpapers.org@gmail.com',
+    :password       => ENV['GMAIL_PASSWORD'],
     :authentication => :plain,
-    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
-    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => 'heroku.com',
     :enable_starttls_auto => true
   }
 
