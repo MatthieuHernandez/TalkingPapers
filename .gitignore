@@ -40,4 +40,5 @@
 yarn-debug.log*
 .yarn-integrity
 
- # Gemfile.lock
+# Ignore script to start server in local on Windows
+local_start.bat
