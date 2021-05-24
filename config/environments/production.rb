@@ -51,7 +51,7 @@ Rails.application.configure do
   config.log_level = :debug
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -66,14 +66,14 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: 'talking-papers.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'talkingpapers.org' }
   ActionMailer::Base.smtp_settings = {
-    :address        => ENV['MAILGUN_SMTP_SERVER'],
-    :port           => ENV['MAILGUN_SMTP_PORT'],
+    :address        => 'smtp.gmail.com',
+    :port           => 587,
+    :domain         => 'mail.google.com',
+    :user_name      => 'talkingpapers.org@gmail.com',
+    :password       => ENV['GMAIL_PASSWORD'],
     :authentication => :plain,
-    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
-    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => 'heroku.com',
     :enable_starttls_auto => true
   }
 

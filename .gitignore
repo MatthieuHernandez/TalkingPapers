@@ -40,4 +40,9 @@
 yarn-debug.log*
 .yarn-integrity
 
- # Gemfile.lock
+# Ignore script to start server in local on Windows
+local_start.bat
+
+# Ignore development evironment variables: DO NOT REMOVE, contains private passwords
+/config/application.yml
+
