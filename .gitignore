@@ -44,4 +44,5 @@ yarn-debug.log*
 local_start.bat
 
 # Ignore development evironment variables: DO NOT REMOVE, contains private passwords
-/app/config/app_evironment_variable.rb
+/config/application.yml
+
