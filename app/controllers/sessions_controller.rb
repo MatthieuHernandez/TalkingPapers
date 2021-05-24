@@ -34,7 +34,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:email]) 
     if user && !user.activated?
       user.send_activation_email
-      flash[:info] = "#{params[:email]} Email resent. Please check your email to activate your account."
+      flash[:info] = "Email resent. Please check your email to activate your account."
     else
       flash[:danger] = 'This email address is not associated with any account.'
     end
