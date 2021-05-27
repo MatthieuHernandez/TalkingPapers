@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get  '/about',   to: 'static_pages#about'
   get  '/contact', to: 'static_pages#contact'
   get  '/signup',  to: 'users#new'
+  get  '/delete',  to: 'users#delete'
+  post '/delete',  to: 'users#destroy'
   get  '/login',   to: 'sessions#new'
   post '/login',   to: 'sessions#create'
   get  '/logout',  to: 'sessions#destroy'
