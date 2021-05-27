@@ -52,9 +52,9 @@ class UsersController < ApplicationController
 
   def destroy
     if current_user && current_user.authenticate(params[:session][:password])
-      #User.find(params[:id]).destroy
-      flash[:success] = "User deleted"
-      render 'delete'
+      User.find(current_user.id).destroy
+      flash[:success] = "Account deleted"
+      redirect_to root_url
     else
       flash.now[:danger] = 'Invalid password'
       render 'delete'
