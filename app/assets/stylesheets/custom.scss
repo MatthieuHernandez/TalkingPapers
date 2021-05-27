@@ -226,6 +226,14 @@ input[type="radio"] {
   }
 }
 
+.dangerous {
+  color: #FF6459;
+  font-weight: bold;
+  &:hover {
+    color: #FF202A;
+  }
+}
+
 .checkbox {
   margin-top: -10px;
   margin-bottom: 10px;
