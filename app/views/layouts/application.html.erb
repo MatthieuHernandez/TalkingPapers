@@ -8,34 +8,30 @@
 
 <html>
   <head>
-<%= favicon_link_tag asset_path('tpfavicon.png'), :rel => 'icon', :type =>  'image/png' %>
-   <title><%= full_title(yield(:title)) %></title>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <%= csrf_meta_tags %>
-   <%= csp_meta_tag %>
-
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= render 'layouts/shim' %>
- </head>
- <body>
-  <% if current_page?(root_path) %>
+    <%= favicon_link_tag asset_path('tpfavicon.png'), :rel => 'icon', :type =>  'image/png' %>
+    <title><%= full_title(yield(:title)) %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= render 'layouts/shim' %>
+  </head>
+  <body>
+    <% if current_page?(root_path) %>
       <%= render 'layouts/home_header' %>
-  <% else %>
+    <% else %>
       <%= render 'layouts/header' %>
-  <% end %>
-  <div class="header-pad"></div>
-
-  <div class="container">
+    <% end %>
+    <div class="header-pad"></div>
+    <div class="container">
       <% flash.each do |message_type, message| %>
         <div class="alert alert-<%= message_type %>"><%= message.html_safe %></div>
       <% end %>
-    <%= yield %>
-  <%= render 'layouts/footer' %>
-  <%= debug(params) if Rails.env.development? %>
-   </div>
-
-
-
+      <%= yield %>
+      <%= render 'layouts/footer' %>
+      <%= debug(params) if Rails.env.development? %>
+    </div>
   </body>
 </html>
