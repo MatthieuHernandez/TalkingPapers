@@ -86,28 +86,20 @@ note_cat = note.note_type.to_s.capitalize %>
 <!--         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
  -->        
           <% if query == "private" %>
-            <%= form_with scope: :note, url: notes_path(article_id: @article.id) do |form| %>
-                <%= form.hidden_field :is_public, :value => true %>
-                <%= form.hidden_field :page_num, :value => note.page_num %>
-                <%= form.hidden_field :note_text, :value => note.note_text %>
-                <%= form.hidden_field :note_type, :value => note.note_type %>
-                <%= form.hidden_field :username, :value => current_user.name %>
-                <%= form.hidden_field :parent_note_id, :value => note.id %>
-
-    <%= form.label :is_anon, class: "checkbox-anon inline" do %>
-     <%= form.check_box :is_anon %>
-     <span>Stay anonymous</span>
-    <% end %> 
-
-
-                <%= form.submit 'Publish', class: "btn btn-outline-secondary mb-0", type: "submit", data: { disable_with: false }%>
+            <%= form_with scope: :note, url: publish_note_path(id: note.id, article_id: @article.id) do |form| %>
+              <%= form.hidden_field :is_public, :value => true %>
+              <%= form.label :is_anon, class: "checkbox-anon inline" do %>
+              <%= form.check_box :is_anon %>
+              <span>Stay anonymous</span>
+            <% end %> 
+            <%= form.submit 'Publish', class: "btn btn-outline-secondary mb-0", type: "submit", data: { disable_with: false }%>
             <% end %>
-            <% else %>
+          <% else %>
             <% if current_user.nil? %>
-             <%= link_to "Login to comment", login_path, class: 'btn btn-primary' %>
+              <%= link_to "Login to comment", login_path, class: 'btn btn-primary' %>
             <% else %>
-          <%= button_to "Comment", note_path(id: note.id), class: "btn btn-secondary my-0", method: :get %>
-          <% end %>
+              <%= button_to "Comment", note_path(id: note.id), class: "btn btn-secondary my-0", method: :get %>
+            <% end %>
           <% end %>
       </div>
     </div>

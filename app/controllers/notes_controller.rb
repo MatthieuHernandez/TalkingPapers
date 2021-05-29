@@ -53,6 +53,17 @@ class NotesController < ApplicationController
         end
     end
 
+    def publish
+        @note = Note.find(params[:id])
+        if @note.update(note_params)
+            flash[:success] = "Note published"
+            redirect_to article_path(params[:article_id])
+        else
+            flash[:danger] = "Error"
+            redirect_to article_path(params[:article_id])
+        end
+    end
+
 private
   def note_params
     params.require(:note).permit(:article_id, :note_text, :user_id, 
