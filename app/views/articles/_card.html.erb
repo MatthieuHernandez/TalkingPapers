@@ -19,7 +19,7 @@ note_cat = note.note_type.to_s.capitalize %>
           <% if !current_user.nil? %>
             <% if note.user_id == current_user.id %>
               <%= link_to "Delete", note_path(article_id: article_id, id: note.id, query: "public"), method: :delete,
-                                  data: { confirm: "You sure?" }, class: "mb-2 float-right card-link text-white" %>
+                                  data: { confirm: 'Are you sure you want to delete this note?' }, class: "mb-2 float-right card-link text-white" %>
             <% end %>
           <% end %>
         <% end %>
@@ -31,8 +31,8 @@ note_cat = note.note_type.to_s.capitalize %>
 
       <div class="card-footer">
           <% if query == "private" %>
-          <%= link_to "Delete", note_path(article_id: article_id, id: note.id, query: "private"), method: :delete,
-                              data: { confirm: "You sure?" }, class: "mb-2 float-left card-link" %>
+          <%= link_to 'Delete', note_path(article_id: article_id, id: note.id), method: :delete,
+                              data: { confirm: 'Are you sure you want to delete this note?' }, class: "mb-2 float-left card-link" %>
           <% else %>
             <% if !note.username.nil? and !note.is_anon %>
                 By <%= link_to note.username, user_path(id: note.user_id) %>
