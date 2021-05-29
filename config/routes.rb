@@ -16,7 +16,11 @@ Rails.application.routes.draw do
   get    '/resend',  to: 'sessions#resend'
   resources :users
   resources :articles
-  resources :notes
+  resources :notes do
+    member do
+      post :publish
+    end
+  end
   resources :comments
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
