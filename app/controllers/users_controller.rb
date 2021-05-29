@@ -89,7 +89,6 @@ class UsersController < ApplicationController
     def destroy_notes
         notes = Note.where('username = ? OR username IS ?', current_user.name, nil)
         notes.each do |note|
-            puts "NOTE = #{note.id}"
             if note.is_public == true
                 note.update(username: nil)
                 note.update(is_anon: true)
