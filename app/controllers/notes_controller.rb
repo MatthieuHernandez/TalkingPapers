@@ -7,7 +7,6 @@ class NotesController < ApplicationController
         @note = current_user.notes.build(note_params)
         @note.image.attach(params[:note][:image])
 
-        @note.update(article_id: params[:article_id])
         # add image copying here
         if !params[:note][:parent_note_id].nil? && Note.find(params[:note][:parent_note_id]).image.attached?
             @note.image.attach(Note.find(params[:note][:parent_note_id]).image.blob)
