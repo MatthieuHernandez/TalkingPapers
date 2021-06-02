@@ -18,24 +18,22 @@
       <div class="tab-content">
         <div id="arxiv" class="container tab-pane <%=is_active('arxiv')%>"><br>
           <p><center>Search for papers to see notes others have added or to add your own notes &#129299</center></p>
-        <%= form_with scope: :article, url: articles_path, class: "form-inline col-sm-8 offset-sm-2 mb-4", local: true do |f| %>
-        <%= f.hidden_field :is_arxiv, :value => true, id: "arxiv" %>
-        <%= f.text_field :url, class: 'form-control col-sm-10 my-1', id: "url1", placeholder: "Enter arxiv link e.g. https://arxiv.org/abs/1406.2661"%>
-        <%= f.submit "Search", class: "btn btn-primary col-sm-2 my-1" %>
-        <% end %>
+          <%= form_with scope: :article, url: articles_path, class: "form-inline col-sm-8 offset-sm-2 mb-4", local: true do |f| %>
+            <%= f.hidden_field :is_arxiv, :value => true, id: "arxiv" %>
+            <%= f.text_field :url, class: 'form-control col-sm-10 my-1', id: "url1", placeholder: "Enter arxiv link e.g. https://arxiv.org/abs/1406.2661"%>
+            <%= f.submit "Search", class: "btn btn-primary col-sm-2 my-1" %>
+          <% end %>
         </div>
         <div id="others" class="container tab-pane <%=is_active('others')%>"><br>
           <p><center>Search for papers to see notes others have added or to add your own notes &#129299</center></p>
           <div class="col-sm-8 offset-sm-2 mb-4">
-
               <%= form_with scope: :article, url: articles_path, local: true do |f| %>
-              <%= f.hidden_field :is_arxiv, :value => false, id: "not_arxiv" %>
-              <%= f.label :url, 'Link to PDF' %>
-              <%= f.text_field :url, class: 'form-control', id: "url2", placeholder: "E.g. https://www.jmlr.org/papers/volume3/guyon03a/guyon03a.pdf"%>
-              <%= f.label :title, 'Title of paper' %>
-              <%= f.text_field :title, class: 'form-control', placeholder: "E.g. An Introduction to Variable and Feature Selection"%>			
-              <%= f.submit "Search", class: "btn btn-primary my-1 block" %>
-        
+                <%= f.hidden_field :is_arxiv, :value => false, id: "not_arxiv" %>
+                <%= f.label :url, 'Link to PDF' %>
+                <%= f.text_field :url, class: 'form-control', id: "url2", placeholder: "E.g. https://www.jmlr.org/papers/volume3/guyon03a/guyon03a.pdf"%>
+                <%= f.label :title, 'Title of paper' %>
+                <%= f.text_field :title, class: 'form-control', placeholder: "E.g. An Introduction to Variable and Feature Selection"%>			
+                <%= f.submit "Search", class: "btn btn-primary my-1 block" %>
               <% end %>
         </div>
       </div>	

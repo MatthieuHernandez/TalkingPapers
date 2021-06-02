@@ -8,22 +8,44 @@ class ArticlesController < ApplicationController
     end
 
     def create
-        #puts "---------- #{params[:active_tab]} ----------"
-        #puts "URL = #{parse_arxiv_url(article_params[:url])}"
+        @url = article_params[:url]
+        active_tab = params[:active_tab]
+        @article = Article.where(:url => @url).first
 
-        @article = Article.where(:url => @article.url).first
-        if exist.nil?
-            if is_valid_arxiv_url(article_params[:url])
+        if @article.blank?
+            if is_valid_arxiv_url
+                puts "Arxiv paper"
                 create_arxiv_article
-            elsif valid_non_arxiv_paper(article_params[:url])
-                if params[:active_tab] == 'others'
-                    create_non_arxiv_article
-                else
-                    redirect_to root_path (active_tab: 'others')
+            elsif is_valid_non_arxiv_url
+                puts "Non arxiv paper"
+                puts "title = #{@title}"
+                if @title.blank?
+                    params[:active_tab] = 'others'
+                    flash[:danger] = 'You must fill in the title of the article.'
+                    redirect_to root_path(active_tab: 'others') and return
                 end
+                # if active_tab == 'others'
+                #     puts "Non arxiv paper"
+                #     create_non_arxiv_article
+                # else
+                #     flash[:success] = 'Error'
+                #     redirect_to root_path and return
+                #     redirect_to root_path(active_tab: 'others')
+                # end
+            else
+                if article_params[:is_arxiv] == 'true'
+                   flash[:danger] = 'Invalid arxiv link, please check the arxiv URL and try again. (provide the link of abs page instead of the pdf if possible)'
+                else
+                   flash[:danger] = 'Invalid pdf link, please check the URL and try again.'
+                end
+                redirect_to root_path and return
+                return
             end
         end
-        redirect_to @article
+        flash[:success] = 'Article created'
+        redirect_to root_path and return
+        #puts "Blank = #{@article.blank?}"
+        #return redirect_to @article
     end
 
     def show
@@ -74,50 +96,58 @@ private
         params.require(:article).permit(:url, :title, :download_link, :is_arxiv)
     end
 
-    def is_valid_arxiv_url(url)
+    def is_valid_arxiv_url
+        puts '===> is_valid_arxiv_url'
         begin
-            if url.include? "arxiv.org/abs/"
-                doc = Nokogiri::HTML(open(@article.url))
-                title = doc.xpath('/html/head/meta[@name="citation_title"]/@content').to_s
-                download_link = doc.xpath('/html/head/meta[@name="citation_pdf_url"]/@content').to_s
-                return url
+            if @url.include? 'arxiv.org/abs/'
+                doc = Nokogiri::HTML(open(@url))
+                @title = doc.xpath('/html/head/meta[@name="citation_title"]/@content').to_s
+                @download_link = doc.xpath('/html/head/meta[@name="citation_pdf_url"]/@content').to_s
+                return true
             end
-        rescue
-            flash[:danger] = 'Invalid arxiv link, please check the arxiv URL and try again. (provide the link of abs page instead of the pdf if possible)'
-            redirect_to root_path
         end
-        return nil
+        return false
     end
 
-    def is_valid_non_arxiv_url(uri)
+    def is_valid_non_arxiv_url
+        puts '===> is_valid_non_arxiv_url'
         begin
-            url = URI.parse(uri)
-            req = Net::HTTP.new(url.host, url.port)
-            req.use_ssl = true
-            res = req.request_head(url.path)
+            uri  = URI.parse(@url)
+            req = Net::HTTP.new(uri.host, uri.port)
+            res = req.request_head(uri.path)
             if res.code == "200" && res.content_type == "application/pdf"
-                article_params[:download_link] = uri
-                true
-            else
-                false
+                @title = article_params[:title]
+                @download_link = @url
+                return true
             end
         rescue
-            flash[:danger] = 'Invalid pdf link, please check the URL and try again.'
-            redirect_to root_path
+            return false
         end
+        return false
     end
 
-    def create_arxiv_article(url)
-        title
-        @article = Article.new(:url => article_params[:url], :title => article_params[:title], :download_link => article_params[:download_link])
+    def create_arxiv_article
+        puts '---------- create_arxiv_article ----------'
+        puts "url           = #{@url}"
+        puts "title         = #{@title}"
+        puts "download_link = #{@download_link}"
+        puts '------------------------------------------'
+        #@article = Article.new(:url => article_params[:url], :title => article_params[:title], :download_link => article_params[:download_link])
         #@article.save
     end
 
-    def create_non_arxiv_article(url)
-        if title
-        flash[:danger] = 'You must fill in the title of the article.'
-        @article = Article.new(:url => article_params[:url], :title => article_params[:title], :download_link => article_params[:download_link])
-        #@article.save
+    def create_non_arxiv_article
+        puts '-------- create_non_arxiv_article --------'
+        puts "url           = #{@url}"
+        puts "title         = #{@title}"
+        puts "download_link = #{@download_link}"
+        puts '------------------------------------------'
+        # if article_params[:title].blank?
+        #     flash[:danger] = 'You must fill in the title of the article.'
+        #     redirect_to root_path
+        # end
+        # @article = Article.new(:url => article_params[:url], :title => article_params[:title], :download_link => article_params[:download_link])
+        # @article.save
     end
 
 end
