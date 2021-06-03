@@ -8,44 +8,31 @@ class ArticlesController < ApplicationController
     end
 
     def create
-        @url = article_params[:url]
+        @url = format_url(article_params[:url])
         active_tab = params[:active_tab]
         @article = Article.where(:url => @url).first
 
         if @article.blank?
             if is_valid_arxiv_url
-                puts "Arxiv paper"
-                create_arxiv_article
+                create_article
             elsif is_valid_non_arxiv_url
-                puts "Non arxiv paper"
-                puts "title = #{@title}"
                 if @title.blank?
                     params[:active_tab] = 'others'
                     flash[:danger] = 'You must fill in the title of the article.'
-                    redirect_to root_path(active_tab: 'others') and return
+                    redirect_to root_path(active_tab: 'others', url: @url) and return
                 end
-                # if active_tab == 'others'
-                #     puts "Non arxiv paper"
-                #     create_non_arxiv_article
-                # else
-                #     flash[:success] = 'Error'
-                #     redirect_to root_path and return
-                #     redirect_to root_path(active_tab: 'others')
-                # end
+                create_article
             else
                 if article_params[:is_arxiv] == 'true'
                    flash[:danger] = 'Invalid arxiv link, please check the arxiv URL and try again. (provide the link of abs page instead of the pdf if possible)'
+                   redirect_to root_path(active_tab: 'arxiv') and return
                 else
                    flash[:danger] = 'Invalid pdf link, please check the URL and try again.'
+                   redirect_to root_path(active_tab: 'others') and return
                 end
-                redirect_to root_path and return
-                return
             end
         end
-        flash[:success] = 'Article created'
-        redirect_to root_path and return
-        #puts "Blank = #{@article.blank?}"
-        #return redirect_to @article
+        redirect_to @article and return
     end
 
     def show
@@ -96,8 +83,20 @@ private
         params.require(:article).permit(:url, :title, :download_link, :is_arxiv)
     end
 
+    def format_url(url)
+        url = url.delete(' ')
+        if url.start_with?('arxiv.org')
+            url.prepend('https://')
+        if url.include? 'arxiv.org/pdf/'
+            end
+            url = url.gsub('.pdf', '')
+            url = url.gsub('/pdf/', '/abs/')
+        end
+        puts "URL 99 = #{url}"
+        return url
+    end
+
     def is_valid_arxiv_url
-        puts '===> is_valid_arxiv_url'
         begin
             if @url.include? 'arxiv.org/abs/'
                 doc = Nokogiri::HTML(open(@url))
@@ -110,14 +109,13 @@ private
     end
 
     def is_valid_non_arxiv_url
-        puts '===> is_valid_non_arxiv_url'
         begin
             uri  = URI.parse(@url)
-            req = Net::HTTP.new(uri.host, uri.port)
-            res = req.request_head(uri.path)
+            res = Net::HTTP.get_response(uri)
             if res.code == "200" && res.content_type == "application/pdf"
                 @title = article_params[:title]
-                @download_link = @url
+                @download_link = uri
+                puts "CCCCCCCCCCCCCCCCCCCC"
                 return true
             end
         rescue
@@ -126,28 +124,10 @@ private
         return false
     end
 
-    def create_arxiv_article
-        puts '---------- create_arxiv_article ----------'
-        puts "url           = #{@url}"
-        puts "title         = #{@title}"
-        puts "download_link = #{@download_link}"
-        puts '------------------------------------------'
-        #@article = Article.new(:url => article_params[:url], :title => article_params[:title], :download_link => article_params[:download_link])
-        #@article.save
-    end
-
-    def create_non_arxiv_article
-        puts '-------- create_non_arxiv_article --------'
-        puts "url           = #{@url}"
-        puts "title         = #{@title}"
-        puts "download_link = #{@download_link}"
-        puts '------------------------------------------'
-        # if article_params[:title].blank?
-        #     flash[:danger] = 'You must fill in the title of the article.'
-        #     redirect_to root_path
-        # end
-        # @article = Article.new(:url => article_params[:url], :title => article_params[:title], :download_link => article_params[:download_link])
-        # @article.save
+    def create_article
+        puts "AAAAAAAAAAAAAAAAAAAA"
+        @article = Article.new(:url => @url, :title => @title, :download_link => @download_link)
+        @article.save
     end
 
 end
