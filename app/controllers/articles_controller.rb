@@ -127,33 +127,11 @@ private
             if res.code == '200' && res.content_type == 'application/pdf'
                 @title = article_params[:title]
                 @download_link = res['uri']
-                puts "download_link = #{@download_link}"
                 return true
             end
         rescue
         end
         return false
-    end
-
-    # Deal with redirections
-    def fetch(url, limit = 4)
-        raise ArgumentError, 'too many HTTP redirects' if limit == 0
-
-        uri  = URI.parse(@url)
-        response = Net::HTTP.get_response(uri)
-
-        puts '=========================================================================================================='
-        puts "URI                    = #{uri}"
-        puts "Port                   = #{uri.port}"
-        puts "Content-Type           = #{response['Content-Type']}"
-        puts "Date                   = #{response['Date']}"
-        puts "Pragma                 = #{response['Pragma']}"
-        puts "Connection             = #{response['Connection']}"
-        puts "Server                 = #{response['Server']}"
-        puts "X-Content-Type-Options = #{response['X-Content-Type-Options']}"
-        puts "location               = #{response['location']}"
-        puts "Code                   = #{response.code}"
-        puts '=========================================================================================================='
     end
 
     def create_article
