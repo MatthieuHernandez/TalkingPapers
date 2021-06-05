@@ -1,6 +1,8 @@
 module ApplicationHelper
 
 require 'kramdown'
+require 'open-uri'
+require 'uri'
 
     def kramdown(text)
         return Kramdown::Document.new(text).to_html

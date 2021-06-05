@@ -3,13 +3,23 @@ class ArticlesController < ApplicationController
     require 'open-uri'
     require 'uri'
 
+    include ArticlesHelper
+
     def new
         render '/static_pages/home'
     end
 
     def create
         @url = format_url(article_params[:url])
-        active_tab = params[:active_tab]
+
+        if article_params[:url].blank?
+            if article_params[:is_arxiv] == 'true'
+                redirect_to root_path(active_tab: 'arxiv') and return
+            else
+                redirect_to root_path(active_tab: 'others') and return
+            end
+        end
+        
         @article = Article.where(:url => @url).first
 
         if @article.blank?
@@ -92,7 +102,10 @@ private
             url = url.gsub('.pdf', '')
             url = url.gsub('/pdf/', '/abs/')
         end
-        puts "URL 99 = #{url}"
+        if url.include? 'arxiv.org/ftp/arxiv/papers/'
+            url = url.gsub('.pdf', '')
+            url = url.gsub(/\/ftp\/arxiv\/papers\/[0-9]*\//, '/abs/')
+        end
         return url
     end
 
@@ -110,22 +123,40 @@ private
 
     def is_valid_non_arxiv_url
         begin
-            uri  = URI.parse(@url)
-            res = Net::HTTP.get_response(uri)
-            if res.code == "200" && res.content_type == "application/pdf"
+            res = resolveUrl(@url)
+            if res.code == '200' && res.content_type == 'application/pdf'
                 @title = article_params[:title]
-                @download_link = uri
-                puts "CCCCCCCCCCCCCCCCCCCC"
+                @download_link = res['uri']
+                puts "download_link = #{@download_link}"
                 return true
             end
         rescue
-            return false
         end
         return false
     end
 
+    # Deal with redirections
+    def fetch(url, limit = 4)
+        raise ArgumentError, 'too many HTTP redirects' if limit == 0
+
+        uri  = URI.parse(@url)
+        response = Net::HTTP.get_response(uri)
+
+        puts '=========================================================================================================='
+        puts "URI                    = #{uri}"
+        puts "Port                   = #{uri.port}"
+        puts "Content-Type           = #{response['Content-Type']}"
+        puts "Date                   = #{response['Date']}"
+        puts "Pragma                 = #{response['Pragma']}"
+        puts "Connection             = #{response['Connection']}"
+        puts "Server                 = #{response['Server']}"
+        puts "X-Content-Type-Options = #{response['X-Content-Type-Options']}"
+        puts "location               = #{response['location']}"
+        puts "Code                   = #{response.code}"
+        puts '=========================================================================================================='
+    end
+
     def create_article
-        puts "AAAAAAAAAAAAAAAAAAAA"
         @article = Article.new(:url => @url, :title => @title, :download_link => @download_link)
         @article.save
     end

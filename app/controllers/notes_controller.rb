@@ -55,7 +55,7 @@ class NotesController < ApplicationController
     def publish
         @note = Note.find(params[:id])
         if @note.update(note_params)
-            flash[:success] = "Note published"
+            flash[:success] = "Note published: This note is now public."
             redirect_to article_path(params[:article_id])
         else
             flash[:danger] = "Error"
