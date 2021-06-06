@@ -70,8 +70,22 @@ p {
     border-color: #4742de;
 }
 
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
 
 /* header */
+
+.fixed-top {
+  border-bottom: 1px solid rgba(0,0,0,0.125);
+}
+
+.nav-tabs {
+  margin: -1px 0px 0px -1px;
+}
 
 #logo {
   float: left;
@@ -94,7 +108,7 @@ p {
 footer {
   margin-top: 45px;
   padding-top: 5px;
-  border-top: 1px solid #eaeaea;
+  border-bottom: 1px solid rgba(0,0,0,0.125);
   color: #777;
 }
 
@@ -150,7 +164,7 @@ footer ul li {
   clear: both;
   float: left;
   width: 100%;
-  margin-top:45px;
+  margin-top: 35px;
   @include box_sizing;
 }
 
