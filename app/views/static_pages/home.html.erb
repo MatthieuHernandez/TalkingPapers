@@ -58,12 +58,12 @@
 
     <% @recent_articles.each do |article| %>
       <div class = "card my-1">
-        <div class = "card-text my-2 mx-2">
+        <div class = "card-text my-2 mx-2 px-1">
       <%= link_to article.title, article_path(:id => article.article_id, query: "public")%> | 
           <%= pluralize( article.num_notes, 'note') %>
 
         </div>
-        <div class="blockquote-footer mx-2 my-1">
+        <div class="blockquote-footer mx-2 my-1 px-1">
       <div class="float-right">
         Last updated <%= time_ago_in_words(article.last_updated)   %> ago
 

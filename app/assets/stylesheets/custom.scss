@@ -2,6 +2,16 @@
 
 /* universal */
 
+$primary          : #4742de;
+$primary-light    : #836eff;
+$primary-dark     : #0018ab;
+
+$secondary        : #e9ecef;
+$secondary-light  : #ffffff;
+$secondary-dark   : #b7babd;
+
+$text-dark        : #495057;
+
 body {
 padding-top: 60px;
 }
@@ -60,31 +70,46 @@ p {
 
 .btn-primary {
     color: #FFFFFF;
-    background-color: #4742de;
-    border-color: #4742de;
+    background-color: $primary;
+    border-color: $primary;
 }
 
 .btn-primary:hover {
     color: #FFFFFF;
-    background-color: #6f6ce6;
-    border-color: #4742de;
+    background-color: $primary-dark;
+    border-color: $primary-dark;
 }
 
-.btn-primary:hover,
-.btn-primary:focus {
-    background-color: #007bff;
-    border-color: #007bff;
+.btn-primary:disabled
+{
+    background-color: $primary-light;
+    border-color: $primary-light;
+}
+
+.btn-link {
+  font-weight: 700;
 }
 
 
 /* header */
 
 .fixed-top {
-  border-bottom: 1px solid rgba(0,0,0,0.125);
+  border-bottom: 1px solid $secondary-dark;
 }
 
 .nav-tabs {
   margin: -1px 0px 0px -1px;
+  border-color:$secondary-dark;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  color: $text-dark;
+  background-color: $secondary-light;
+  border-color: $secondary-dark $secondary-dark $secondary-light;
+}
+
+.nav-tabs .nav-link:hover:not(.nav-link.active), .nav-tabs .nav-link:focus:not(.nav-link.active) {
+  border-color: $secondary-dark
 }
 
 #logo {
@@ -108,7 +133,7 @@ p {
 footer {
   margin-top: 45px;
   padding-top: 5px;
-  border-bottom: 1px solid rgba(0,0,0,0.125);
+  border-bottom: 1px solid $secondary-dark;
   color: #777;
 }
 
@@ -407,6 +432,10 @@ input[type="radio"] {
 }
 
 /* card */
+
+.card {
+  border: 1px solid $secondary-dark;
+}
 
 .card-body {
   min-width: 0;
