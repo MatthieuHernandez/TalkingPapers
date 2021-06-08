@@ -10,7 +10,7 @@ $secondary        : #e9ecef;
 $secondary-light  : #ffffff;
 $secondary-dark   : #b7babd;
 
-$text-dark        : #495057;
+$text-dark        : #515960;
 
 body {
 padding-top: 60px;
@@ -102,6 +102,10 @@ p {
   border-color:$secondary-dark;
 }
 
+.navbar-light .navbar-nav .nav-link {
+  color: $text-dark;
+}
+
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
   color: $text-dark;
   background-color: $secondary-light;
@@ -138,7 +142,7 @@ footer {
 }
 
 footer a {
-  color: #555;
+  color: $text-dark;
 }
 
 footer a:hover {
