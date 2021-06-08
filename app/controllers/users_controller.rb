@@ -8,14 +8,7 @@ class UsersController < ApplicationController
 
     def show
         @user = User.find(params[:id])
-
-        if current_user.nil?
-            @user_articles = nil
-        else
-            @user_articles = @user.articles_with_notes.distinct
-        end
-
-        @current_user = current_user
+        @user_articles = @user.articles_with_notes.distinct
     end
 
     def new
