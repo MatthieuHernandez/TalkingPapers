@@ -1,11 +1,11 @@
 class AddDefaultValuesToNotNullColumns < ActiveRecord::Migration[6.1]
   def change
-    change_column_default(:comments, :is_anon, false)
+    change_column_default(:comments, :is_anon,   to: false, from: nil)
 
-    change_column_null(:notes,    :is_public,  true)
-    change_column_null(:notes,    :is_anon,    false)
+    change_column_default(:notes,    :is_public, to: true, from: nil)
+    change_column_default(:notes,    :is_anon,   to: false, from: nil)
 
-    change_column_null(:users,    :admin,      false)
-    change_column_null(:users,    :activated,  false)
+    change_column_default(:users,    :admin,     to: false, from: nil)
+    change_column_default(:users,    :activated, to: false, from: nil)
   end
 end

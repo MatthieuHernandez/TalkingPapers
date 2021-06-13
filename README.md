@@ -15,6 +15,7 @@
 - PostgreSQL
   - install postgres 12
   - initialize db
+  - run `rake db:migrate`
   - run `"C:\Program Files\PostgreSQL\12\bin\pg_ctl" -D "C:\Program Files\PostgreSQL\12\data" start`
 - `npm install --global yarn`
 

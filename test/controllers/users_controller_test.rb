@@ -55,11 +55,19 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to login_url
   end
 
-  test "should redirect destroy when logged in as a non-admin" do
+  test "should destroy when correct password" do
     log_in_as(@other_user)
-    assert_no_difference 'User.count' do
-      delete user_path(@user)
+    assert_difference 'User.count', -1 do
+      delete user_path(@user), params: { session: {password: "password" } }
    end
    assert_redirected_to root_url
+  end
+
+  test "should redirect destroy when wrong password" do
+    log_in_as(@other_user)
+    assert_no_difference 'User.count' do
+      delete user_path(@user), params: { session: {password: "wrong" } }
+   end
+   assert_template 'delete'
   end
 end

@@ -2,12 +2,16 @@
 
 one:
   article_id: 1
+  note_type: note
   note_text: MyText
   user_id: 1
   is_public: false
+  is_anon: false
 
 two:
-  article_id: 1
+  article_id: 2
+  note_type: summary
   note_text: MyText
   user_id: 1
   is_public: false
+  is_anon: false
