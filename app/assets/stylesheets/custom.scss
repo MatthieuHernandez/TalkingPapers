@@ -69,13 +69,13 @@ p {
 /* button */
 
 .btn-primary {
-    color: #FFFFFF;
+    color: $secondary-light;
     background-color: $primary;
     border-color: $primary;
 }
 
 .btn-primary:hover {
-    color: #FFFFFF;
+    color: $secondary-light;
     background-color: $primary-dark;
     border-color: $primary-dark;
 }
@@ -120,7 +120,7 @@ p {
   float: left;
   margin-right: 10px;
   font-size: 1.7em;
-  color: #fff;
+  color: $secondary-light;
   text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
@@ -128,7 +128,7 @@ p {
 }
 
 #logo:hover {
-  color: #fff;
+  color: $secondary-light;
   text-decoration: none;
 }
 

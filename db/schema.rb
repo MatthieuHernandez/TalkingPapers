@@ -2,15 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# This file is the source Rails uses to define your schema when running `rails
-# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
 # be faster and is potentially less error prone than running all of your
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_13_084215) do
+ActiveRecord::Schema.define(version: 2021_06_10_225228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,47 +37,47 @@ ActiveRecord::Schema.define(version: 2020_08_13_084215) do
   end
 
   create_table "articles", force: :cascade do |t|
-    t.string "url"
-    t.text "title"
-    t.string "download_link"
+    t.string "url", null: false
+    t.text "title", null: false
+    t.string "download_link", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "comments", force: :cascade do |t|
-    t.integer "note_id"
-    t.text "comment_text"
+    t.integer "note_id", null: false
+    t.text "comment_text", null: false
     t.integer "user_id"
     t.string "username"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "is_anon"
+    t.boolean "is_anon", default: false, null: false
   end
 
   create_table "notes", force: :cascade do |t|
-    t.integer "article_id"
+    t.integer "article_id", null: false
     t.integer "page_num"
-    t.text "note_text"
-    t.string "note_type"
+    t.text "note_text", null: false
+    t.string "note_type", null: false
     t.integer "user_id"
     t.boolean "is_public"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "username"
-    t.boolean "is_anon"
+    t.boolean "is_anon", null: false
     t.integer "parent_note_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
+    t.string "name", null: false
+    t.string "email", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "password_digest"
+    t.string "password_digest", null: false
     t.string "remember_digest"
-    t.boolean "admin"
+    t.boolean "admin", null: false
     t.string "activation_digest"
-    t.boolean "activated", default: false
+    t.boolean "activated", default: false, null: false
     t.datetime "activated_at"
     t.string "reset_digest"
     t.datetime "reset_sent_at"

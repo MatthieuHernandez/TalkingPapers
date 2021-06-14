@@ -15,7 +15,12 @@
 - PostgreSQL
   - install postgres 12
   - initialize db
+  - run `rake db:migrate`
   - run `"C:\Program Files\PostgreSQL\12\bin\pg_ctl" -D "C:\Program Files\PostgreSQL\12\data" start`
 - `npm install --global yarn`
 
-- Go to http://127.0.0.1:3000/
+- go to http://127.0.0.1:3000/
+
+## Tests
+  - run `"C:\Program Files\PostgreSQL\12\bin\pg_ctl" -D "C:\Program Files\PostgreSQL\12\data" start`
+  - run `rails test` to run the unit tests

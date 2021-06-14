@@ -49,7 +49,6 @@
     <input class="form-control" type="text" placeholder="Search..." name="search" disabled>
     <button type="submit" class="btn btn-primary" disabled><i class="fa fa-search"></i></button>
     </input>
-    
   </div>
 
   <div class="col-sm-12 my-3"><h5>Recently annotated papers</h5></div>
@@ -66,20 +65,13 @@
         <div class="blockquote-footer mx-2 my-1 px-1">
       <div class="float-right">
         Last updated <%= time_ago_in_words(article.last_updated)   %> ago
-
       </div>
       </div>
         </div>
     <% end %>
-
       <% else %>
-
         <div class="col-sm-12 my-3">No publicly annotated papers yet. Get started by searching for a paper!</div>
-
       <% end %>
-
-
-
   </div>
 </div>
 
