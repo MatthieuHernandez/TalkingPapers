@@ -13,23 +13,24 @@ $secondary-dark   : #b7babd;
 $text-dark        : #515960;
 
 body {
-padding-top: 60px;
+  padding-top: 60px;
+  background-image: url('/assets/city-skyscraper2.jpg');
+  background-size: cover;
 }
 
 section {
-overflow: auto;
-
+  overflow: auto;
 }
+
 textarea {
-resize: vertical;
+  resize: vertical;
 }
-.center {
-text-align: center;
 
+.center {
+  text-align: center;
 }
 .center h1 {
-margin-bottom: 10px;
-
+  margin-bottom: 10px;
 }
 
 .header-pad {
