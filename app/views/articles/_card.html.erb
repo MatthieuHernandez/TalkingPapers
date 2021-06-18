@@ -57,7 +57,7 @@ note_cat = note.note_type.to_s.capitalize %>
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body small">
+      <div class="modal-body small modal-full-text">
         <%= kramdown(note.note_text).html_safe %>
         <%= image_tag note.display_image if note.image.attached? %>
         <% if note.image.attached?%></br><% end %>
