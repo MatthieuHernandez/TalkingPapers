@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     def show
         @user = User.find(params[:id])
         @user_articles = @user.articles_with_notes.distinct
+        @current_user = current_user
     end
 
     def new
@@ -42,14 +43,19 @@ class UsersController < ApplicationController
     end
 
     def destroy
-        if current_user && current_user.authenticate(params[:session][:password])
-            User.find(current_user.id).destroy
-            destroy_notes
-            flash[:success] = 'Account deleted'
-            redirect_to root_url
+        if current_user && current_user.id == session[:user_id]
+            if current_user.authenticate(params[:session][:password])
+                User.find(current_user.id).destroy
+                destroy_notes
+                flash[:success] = 'Account deleted'
+                redirect_to root_url
+            else
+                flash.now[:danger] = 'Invalid password'
+                render 'delete'
+            end
         else
-            flash.now[:danger] = 'Invalid password'
-            render 'delete'
+            flash.now[:danger] = 'Wrong account'
+            redirect_to root_url
         end
     end
 
@@ -81,7 +87,7 @@ class UsersController < ApplicationController
 
     # Destroy all user notes.
     def destroy_notes
-        notes = Note.where('username = ? OR username IS ?', current_user.name, nil)
+        notes = Note.where('user_id = ? OR username IS ?', current_user.id, nil)
         notes.each do |note|
             if note.is_public == true
                 note.update(username: nil)

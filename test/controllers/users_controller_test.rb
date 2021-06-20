@@ -55,19 +55,23 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to login_url
   end
 
-  test "should destroy when correct password" do
-    log_in_as(@other_user)
-    assert_difference 'User.count', -1 do
-      delete user_path(@user), params: { session: {password: "password" } }
-   end
-   assert_redirected_to root_url
-  end
-
   test "should redirect destroy when wrong password" do
-    log_in_as(@other_user)
+    log_in_as(@user)
     assert_no_difference 'User.count' do
-      delete user_path(@user), params: { session: {password: "wrong" } }
+      assert_no_difference 'Note.count' do
+        delete user_path(@user), params: { session: {password: "wrong" } }
+      end
    end
    assert_template 'delete'
+  end
+
+  test "should destroy user and his notes when correct password" do
+    log_in_as(@user)
+    assert_difference 'User.count', -1 do
+      assert_difference 'Note.count', -2 do
+        delete user_path(@user), params: { session: {password: "password" } }
+      end
+   end
+   assert_redirected_to root_url
   end
 end

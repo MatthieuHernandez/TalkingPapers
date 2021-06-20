@@ -3,7 +3,7 @@
 one:
   article_id: 1
   note_type: note
-  note_text: MyText
+  note_text: MyText 1
   user_id: 1
   is_public: false
   is_anon: false
@@ -11,7 +11,15 @@ one:
 two:
   article_id: 2
   note_type: summary
-  note_text: MyText
+  note_text: MyText 2
   user_id: 1
+  is_public: true
+  is_anon: false
+
+three:
+  article_id: 2
+  note_type: question
+  note_text: MyText 3
+  user_id: 2
   is_public: false
   is_anon: false

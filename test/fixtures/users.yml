@@ -1,4 +1,5 @@
 michael:
+  id: 1
   name: Michael Example
   email: michael@example.com
   password_digest: <%= User.digest('password') %>
@@ -7,6 +8,7 @@ michael:
   activated_at: <%= Time.zone.now %>
 
 archer:
+  id: 2
   name: Sterling Archer
   email: duchess@example.gov
   password_digest: <%= User.digest('password') %>
@@ -15,6 +17,7 @@ archer:
   activated_at: <%= Time.zone.now %>
 
 lana:
+  id: 3
   name: Lana Kane
   email: hands@example.gov
   password_digest: <%= User.digest('password') %>
@@ -23,6 +26,7 @@ lana:
   activated_at: <%= Time.zone.now %>
 
 malory:
+  id: 4
   name: Malory Archer
   email: boss@example.gov
   password_digest: <%= User.digest('password') %>
