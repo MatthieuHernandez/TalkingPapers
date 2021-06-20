@@ -43,8 +43,8 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
 
-      - name: Run RSpec
-        run: COVERAGE=true bundle exec rspec  --require spec_helper
+      - name: Run tests
+        run: rails test
         env:
           RAILS_ENV: test
           POSTGRES_USER: postgres
