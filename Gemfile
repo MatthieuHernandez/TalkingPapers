@@ -14,7 +14,7 @@ gem 'bcrypt', '3.1.13'
 gem 'faker', '2.1.2'
 gem 'will_paginate-bootstrap4'
 gem 'bootstrap-will_paginate', '1.0.0'
-gem 'bootstrap', '~> 4.5.0'
+gem 'bootstrap', '~> 5.0.1'
 gem 'jquery-rails'
 gem 'puma',       '4.3.5'
 gem 'sass-rails', '6.0.0'
@@ -31,8 +31,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'rspec',                 '~> 3.5'
-  gem 'rspec-rails',           '>= 3.4.2'
   gem 'web-console',           '4.0.2'
   gem 'listen',                '3.2.1'
   gem 'spring',                '2.1.0'
