@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     def show
         @user = User.find(params[:id])
         @user_articles = @user.articles_with_notes.distinct
+        @current_user = current_user
     end
 
     def new
