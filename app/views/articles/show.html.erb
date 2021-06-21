@@ -1,6 +1,6 @@
 <% provide(:title, @article.title) %>
        <h2>
-         <%= @article.title %>
+          <%= kramdown_title(@article.title) %>
       </h2>
       <div class = "center">
       <%= link_to "Open paper in new tab", @article.download_link, target: :_blank, class: 'btn btn-link mb-4' %>

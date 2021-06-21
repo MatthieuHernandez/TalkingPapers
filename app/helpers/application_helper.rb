@@ -3,7 +3,17 @@ module ApplicationHelper
 require 'kramdown'
 
     def kramdown(text)
-        return Kramdown::Document.new(text).to_html
+        return Kramdown::Document.new(text).to_html.html_safe
+    end
+
+    def kramdown_title(text)
+        title = text.dup
+        title.gsub! '$', '$$'
+        title = kramdown(title)
+        title.gsub! '<p>', ''
+        title.gsub! '</p>', ''
+        title.gsub! "\n", ''
+        return title
     end
 
     # Change the active tab.
