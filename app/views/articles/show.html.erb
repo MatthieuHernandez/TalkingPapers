@@ -38,8 +38,8 @@
 
 
 <% else %>
-
-    <%= form_with scope: :note, url: notes_path(article_id: @article.id) do |form| %>
+<%= turbo_frame_tag 'id_1' do %>
+  <%= form_with scope: :note, url: notes_path(article_id: @article.id) do |form| %>
 
     <div class="row h-50">
 
@@ -94,7 +94,7 @@
           </p>
 
       <% end %>
-
+ <% end %>
 
   </div>
 

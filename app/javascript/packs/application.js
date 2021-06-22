@@ -4,8 +4,8 @@
 // that code so it'll be compiled.
 
 require("@rails/ujs").start()
-import "@hotwired/turbo-rails"
 require("@rails/activestorage").start()
+require("@hotwired/turbo-rails")
 require("channels")
 require("jquery")
 require("bootstrap")
@@ -16,3 +16,7 @@ require("bootstrap")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+
+// $(document).on("turbo:load", () => {
+//     console.log("turbo loaded")
+// })
