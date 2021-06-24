@@ -7,9 +7,8 @@ require 'kramdown'
     end
 
     def kramdown_title(text)
-        title = text.dup
-        title.gsub! '$', '$$'
-        title = kramdown(title)
+        text.gsub! '$', '$$'
+        title = kramdown(text)
         title.gsub! '<p>', ''
         title.gsub! '</p>', ''
         title.gsub! "\n", ''
