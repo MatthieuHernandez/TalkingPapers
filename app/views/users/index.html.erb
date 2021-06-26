@@ -3,17 +3,15 @@
 
 <div class="col-md-6 offset-md-3">
   <div class="digg_pagination">
-<%= will_paginate @users,  list_classes: %w(pagination justify-content-center)%>
+    <%= will_paginate @users,  list_classes: %w(pagination justify-content-center)%>
   </div>
 
-
-<ul class="users">
-	<%= render @users %>
-</ul>
-
+  <ul class="users">
+    <%= render @users %>
+  </ul>
 
   <div class="digg_pagination my-3">
-<%= will_paginate @users,  list_classes: %w(pagination justify-content-center)%>
+    <%= will_paginate @users,  list_classes: %w(pagination justify-content-center)%> 
   </div>
 
-  </div>
+</div>
