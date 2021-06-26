@@ -25,7 +25,7 @@ note_cat = note.note_type.to_s.capitalize %>
         <% end %>
     </div>
       <div class="card-body text-<%= font_type[note.note_type] %> small text-truncate">
-        <%= kramdown(note.note_text).html_safe %>
+        <%= kramdown(note.note_text) %>
         <%= "[Image attached]" if note.image.attached? %>
       </div>
 
@@ -58,7 +58,7 @@ note_cat = note.note_type.to_s.capitalize %>
         </button>
       </div>
       <div class="modal-body small modal-full-text">
-        <%= kramdown(note.note_text).html_safe %>
+        <%= kramdown(note.note_text) %>
         <%= image_tag note.display_image if note.image.attached? %>
         <% if note.image.attached?%></br><% end %>
             <% if !note.username.nil? and !note.is_anon %>

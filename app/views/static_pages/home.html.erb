@@ -58,7 +58,7 @@
     <% @recent_articles.each do |article| %>
       <div class = "card my-1">
         <div class = "card-text my-2 mx-2 px-1">
-      <%= link_to article.title, article_path(:id => article.article_id, query: "public")%> | 
+      <%= link_to kramdown_title(article.title), article_path(:id => article.article_id, query: "public")%> | 
           <%= pluralize( article.num_notes, 'note') %>
 
         </div>

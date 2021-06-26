@@ -16,10 +16,10 @@ gem 'will_paginate-bootstrap4'
 gem 'bootstrap-will_paginate', '1.0.0'
 gem 'bootstrap', '~> 4.5.0'
 gem 'jquery-rails'
+gem 'turbo-rails'
 gem 'puma',       '4.3.5'
 gem 'sass-rails', '6.0.0'
 gem 'webpacker',  '4.2.2'
-gem 'turbolinks', '5.2.1'
 gem 'jbuilder',   '2.10.0'
 gem 'bootsnap',   '1.4.6', require: false
 gem "aws-sdk-s3", require: false

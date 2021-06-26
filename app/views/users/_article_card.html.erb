@@ -1,6 +1,5 @@
 <li>
-   
-   <%== article.title %></br>
+   <%= kramdown_title(article.title) %></br>
    <% if current_user == @user.id %>
           <%= link_to "View private notes", article_path(:id => article.id) %> |
   <% end %>

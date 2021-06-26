@@ -1,157 +1,101 @@
 <% provide(:title, @article.title) %>
-       <h2>
-         <%= @article.title %>
-      </h2>
-      <div class = "center">
-      <%= link_to "Open paper in new tab", @article.download_link, target: :_blank, class: 'btn btn-link mb-4' %>
-    </div>
-
-<% if logged_in? %>
-
-<% if @query == "public" %>
-
-<div class = "row">
-
-<div class="col-md-8 my-2">
-
-  <% if !@public_notes.empty? %>
-
-      <% @public_notes.each do |note| %>
-      <%= render partial: "card", locals: {note: note, article_id: @article.id, query: "public"} %>
-      <% end %>
-
-  <% else %>
-
-    No public notes yet. Publish your personal notes to see them here!
-
-  <% end %>
-
-    </div>
-
-<div class="col-md-3">
-
-  <%= link_to "View private notes", article_path(:id => @article.id), class: 'btn btn-primary my-2' %>
-
+<h2>
+  <%= kramdown_title(@article.title) %>
+</h2>
+<div class = "center">
+  <%= link_to "Open paper in new tab", @article.download_link, target: :_blank, class: 'btn btn-link mb-4' %>
 </div>
 
-</div>
+<%= turbo_frame_tag 'id_1' do %>
+  <% if logged_in? %>
+    <% if @query == "public" %>
 
-
-<% else %>
-
-    <%= form_with scope: :note, url: notes_path(article_id: @article.id) do |form| %>
-
-    <div class="row h-50">
-
-
-      <div class="form-group col-md-8">
-
-        <%= form.hidden_field :username, :value => @current_user.name %>
-        <%= form.hidden_field :article_id, :value => @article.id %>
-        <%= form.hidden_field :is_public, :value => false %>
-        <%= form.hidden_field :is_anon, :value => false %>
-
-        <%= form.label :note_text, 'Take a note (Markdown and LaTeX [use $$ to start and end] supported):' %><br>
-        <%= form.text_area :note_text, size: "20x13", class: "form-control", id: "textInput" %>
-        <span class = "image">
-            <%= form.file_field :image, accept: "image/jpeg,image/gif,image/png" %>
-        </span>
+      <div class = "row">
+        <div class="col-md-8 my-2">
+          <% if !@public_notes.empty? %>
+            <% @public_notes.each do |note| %>
+              <%= render partial: "card", locals: {note: note, article_id: @article.id, query: "public"} %>
+            <% end %>
+          <% else %>
+            No public notes yet. Publish your personal notes to see them here!
+          <% end %>
+        </div>
+        <div class="col-md-3">
+          <%= link_to "View private notes", article_path(:id => @article.id), class: 'btn btn-primary my-2' %>
+        </div>
       </div>
-
-      <div class='form-group col-md-3'>
-          <label>Type</label><br/>
-
-          <%= form.radio_button :note_type, 'note', :checked => true  %>
-          <%= form.label :note_type, 'Note', :style => "display:inline" , class: 'badge badge-secondary' %>
-          <br/>
-          
-          <%= form.radio_button :note_type, 'question' %>
-          <%= form.label :note_type, 'Question', :style => "display:inline", class: 'badge badge-primary' %>
-
-          <br/>
-
-          <%= form.radio_button :note_type, 'summary' %>
-          <%= form.label :note_type, 'Summary', :style => "display:inline", class: 'badge badge-success' %>
-
-          <br/>
-
-          <%= form.radio_button :note_type, 'code' %>
-          <%= form.label :note_type, 'Code', :style => "display:inline", class: 'badge badge-warning' %>
-
-          <br/>
-
-          <%= form.radio_button :note_type, 'application' %>
-          <%= form.label :note_type, 'Application', :style => "display:inline", class: 'badge badge-danger' %>
-
-          <br/>
-          <br/>
-
-          <label>PDF page number </label><br/>
-          <%= form.number_field :page_num, :style => "display:inline;width:59%;min-width:100px", class: "form-control", value: 1 %>
-
-          <p>
-            <%= form.submit class: "mb-2 btn btn-primary", :style => "width:59%;min-width:100px"%>
-          </p>
-
-      <% end %>
-
-
-  </div>
-
-</div>
-
-
-<div class = "row">
-
-  <div class = "col-md-8">
-
-      <% @notes.each do |note| %>
-      <%= render partial: "card", locals: {note: note, article_id: @article.id, query: "private"} %>
-      <% end %>
-
-  </div>
-
-  <div class = "col-md-3">
-    <%= link_to "View public notes", article_path(:id => @article.id, :query => "public"), class: 'btn btn-primary' %>
-
-
-  </div>
-
-</div>
-
-    <% end %>
-
-
-<% else %>
-  
-
-  <div class = "row">
-
-    <div class = "col-md-8">
-
-    <% if !@public_notes.empty? %>
-
-      <% @public_notes.each do |note| %>
-      <%= render partial: "card", locals: {note: note, article_id: @article.id, query: "public"} %>
-      <% end %>
 
     <% else %>
 
-      No public notes yet. Publish your personal notes to see them here!
+      <%= form_with scope: :note, url: notes_path(article_id: @article.id) do |form| %>
+        <div class="row h-50">
+          <div class="form-group col-md-8">
+            <%= form.hidden_field :username, :value => @current_user.name %>
+            <%= form.hidden_field :article_id, :value => @article.id %>
+            <%= form.hidden_field :is_public, :value => false %>
+            <%= form.hidden_field :is_anon, :value => false %>
+            <%= form.label :note_text, 'Take a note (Markdown and LaTeX [use $$ to start and end] supported):' %><br>
+            <%= form.text_area :note_text, size: "20x13", class: "form-control", id: "textInput" %>
+            <span class = "image">
+              <%= form.file_field :image, accept: "image/jpeg,image/gif,image/png" %>
+            </span>
+          </div>
+          <div class='form-group col-md-3'>
+            <label>Type</label>
+            <br/>
+            <%= form.radio_button :note_type, 'note', :checked => true  %>
+            <%= form.label :note_type, 'Note', :style => "display:inline" , class: 'badge badge-secondary' %>
+            <br/>
+            <%= form.radio_button :note_type, 'question' %>
+            <%= form.label :note_type, 'Question', :style => "display:inline", class: 'badge badge-primary' %>
+            <br/>
+            <%= form.radio_button :note_type, 'summary' %>
+            <%= form.label :note_type, 'Summary', :style => "display:inline", class: 'badge badge-success' %>
+            <br/>
+            <%= form.radio_button :note_type, 'code' %>
+            <%= form.label :note_type, 'Code', :style => "display:inline", class: 'badge badge-warning' %>
+            <br/>
+            <%= form.radio_button :note_type, 'application' %>
+            <%= form.label :note_type, 'Application', :style => "display:inline", class: 'badge badge-danger' %>
+            <br/>
+            <br/>
+            <label>PDF page number </label>
+            <br/>
+            <%= form.number_field :page_num, :style => "display:inline;width:59%;min-width:100px", class: "form-control", value: 1 %>
+            <%= form.submit class: "mb-2 btn btn-primary", :style => "width:59%;min-width:100px"%>
+          </div>
+        </div>
+      <% end %>
+      <div class = "row">
+        <div class = "col-md-8">
+          <% @notes.each do |note| %>
+            <%= render partial: "card", locals: {note: note, article_id: @article.id, query: "private"} %>
+          <% end %>
+        </div>
+        <div class = "col-md-3">
+          <%= link_to "View public notes", article_path(:id => @article.id, :query => "public"), class: 'btn btn-primary' %>
+        </div>
+      </div>
+  <% end %>
 
-    <% end %>
+  <% else %>
 
-  </div>
+    <div class = "row">
+      <div class = "col-md-8">
+        <% if !@public_notes.empty? %>
+          <% @public_notes.each do |note| %>
+            <%= render partial: "card", locals: {note: note, article_id: @article.id, query: "public"} %>
+          <% end %>
+        <% else %>
+          No public notes yet. Publish your personal notes to see them here!
+      <% end %>
+      </div>
+      <div class = "col-md-3">
+        <%= link_to "Log in now to add notes", login_path, class: 'btn btn-primary' %>
+      </div>
+    </div>
 
-  <div class = "col-md-3">
-
-    <%= link_to "Log in now to add notes", login_path, class: 'btn btn-primary' %>
-
-
-  </div>
-
-</div>
-
+  <% end %>
 <% end %>
 
 <script type="text/javascript">
