@@ -97,8 +97,8 @@ private
         url = url.delete(' ')
         if url.start_with?('arxiv.org')
             url.prepend('https://')
+        end
         if url.include? 'arxiv.org/pdf/'
-            end
             url = url.gsub('.pdf', '')
             url = url.gsub('/pdf/', '/abs/')
         end
