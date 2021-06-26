@@ -32,7 +32,6 @@
           <div class="form-group col-md-8">
             <%= form.hidden_field :username, :value => @current_user.name %>
             <%= form.hidden_field :article_id, :value => @article.id %>
-            <%= form.hidden_field :is_public, :value => false %>
             <%= form.hidden_field :is_anon, :value => false %>
             <%= form.label :note_text, 'Take a note (Markdown and LaTeX [use $$ to start and end] supported):' %><br>
             <%= form.text_area :note_text, size: "20x13", class: "form-control", id: "textInput" %>
@@ -43,20 +42,17 @@
           <div class='form-group col-md-3'>
             <label>Type</label>
             <br/>
-            <%= form.radio_button :note_type, 'note', :checked => true  %>
-            <%= form.label :note_type, 'Note', :style => "display:inline" , class: 'badge badge-secondary' %>
+            <%= form.radio_button :note_type, 'summary' %>
+            <%= form.label :note_type, 'Summary', :style => "display:inline", class: 'badge badge-success' %> <small>public</small>
             <br/>
             <%= form.radio_button :note_type, 'question' %>
-            <%= form.label :note_type, 'Question', :style => "display:inline", class: 'badge badge-primary' %>
+            <%= form.label :note_type, 'Question', :style => "display:inline", class: 'badge badge-primary' %> <small>public</small>
             <br/>
-            <%= form.radio_button :note_type, 'summary' %>
-            <%= form.label :note_type, 'Summary', :style => "display:inline", class: 'badge badge-success' %>
+            <%= form.radio_button :note_type, 'public note' %>
+            <%= form.label :note_type, 'Public Note', :style => "display:inline" , class: 'badge badge-secondary' %>
             <br/>
-            <%= form.radio_button :note_type, 'code' %>
-            <%= form.label :note_type, 'Code', :style => "display:inline", class: 'badge badge-warning' %>
-            <br/>
-            <%= form.radio_button :note_type, 'application' %>
-            <%= form.label :note_type, 'Application', :style => "display:inline", class: 'badge badge-danger' %>
+            <%= form.radio_button :note_type, 'private note', :checked => true  %>
+            <%= form.label :note_type, 'Private Note', :style => "display:inline" , class: 'badge badge-secondary' %>
             <br/>
             <br/>
             <label>PDF page number </label>
