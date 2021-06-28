@@ -4,16 +4,19 @@ class NotesController < ApplicationController
     end
 
     def create
-        @note = current_user.notes.build(note_params)
-        @note.image.attach(params[:note][:image])
-
-        # add image copying here
-        if !params[:note][:parent_note_id].nil? && Note.find(params[:note][:parent_note_id]).image.attached?
-            @note.image.attach(Note.find(params[:note][:parent_note_id]).image.blob)
+        if note_params[:note_text].blank?
+            flash[:danger] = "The note can't be empty."
+        else
+            @note = current_user.notes.build(note_params)
+            @note.image.attach(params[:note][:image])
+            set_type
+            # add image copying here
+            if !params[:note][:parent_note_id].nil? && Note.find(params[:note][:parent_note_id]).image.attached?
+                @note.image.attach(Note.find(params[:note][:parent_note_id]).image.blob)
+            end
+            @note.save
+            flash[:success] = "Note saved"
         end
-
-        @note.save
-
         redirect_to article_path(params[:article_id])
     end
 
@@ -64,9 +67,19 @@ class NotesController < ApplicationController
     end
 
 private
-  def note_params
-    params.require(:note).permit(:article_id, :note_text, :user_id, 
-        :is_public, :note_type, :page_num, :username, :is_anon, :image, :parent_note_id)
-  end
+    def note_params
+        params.require(:note).permit(:article_id, :note_text, :user_id, 
+            :is_public, :note_type, :page_num, :username, :is_anon, :image, :parent_note_id)
+    end
 
+    def set_type
+        if @note.note_type.include? 'private'
+            @note.is_public = false
+            @note.note_type.gsub! 'private', ''
+        else
+            @note.is_public = true
+            @note.note_type.gsub! 'public', ''
+        end
+        @note.note_type = @note.note_type.strip
+    end
 end
