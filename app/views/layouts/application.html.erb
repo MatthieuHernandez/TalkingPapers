@@ -17,6 +17,9 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbo-track': 'reload' %>
     <%= render 'layouts/shim' %>
+    <% if params[:controller] == 'users' and params[:action] == 'show' %>
+      <meta name="turbo-visit-control" content="reload">
+    <%- end %>
   </head>
   <body>
     <% if current_page?(root_path) %>
