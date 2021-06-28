@@ -6,7 +6,7 @@
     <%= form_with(url: delete_path, scope: :session, local: true) do |f| %>
       <%= f.label "To verify, enter your password:" %>
       <%= f.password_field :password, class: 'form-control' %>
-      <%= f.submit "Yes, I want to delete my account.", class: "btn btn-primary" %>
+      <%= f.submit "Yes, I want to delete my account.", class: "btn btn-danger" %>
     <% end %> 
   </div>
 </div>

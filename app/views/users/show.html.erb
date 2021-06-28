@@ -10,11 +10,6 @@
         Joined on <%= @user.created_at.strftime("%Y-%m-%d") %>
       </small>
     </section>
-    <% if @user.id == @current_user&.id %>
-      <%= link_to 'Delete account', '/delete', class: 'dangerous'  %>
-      <% else %>
-      &nbsp;
-    <% end %>
   </aside>
 
   <div class="col-md-8 my-2">
