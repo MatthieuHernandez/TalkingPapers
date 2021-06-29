@@ -1,20 +1,9 @@
 <li>
-   <%= kramdown_title(article.title) %></br>
-   <% if current_user == @user.id %>
-          <%= link_to "View private notes", article_path(:id => article.id) %> |
+  <div>
+    <%= kramdown_title(article.title) %>
+  </div>
+  <% if current_user == @user.id %>
+    <%= link_to "View private notes", article_path(:id => article.id) %> |
   <% end %>
-          <%= link_to "View public notes", article_path(:id => article.id, :query => "public") %>
-
+  <%= link_to "View public notes", article_path(:id => article.id, :query => "public") %>
 </li>
-<!--   <div class="card mb-2" style="width: 18rem;">
-    <div class="card-header text-truncate">
-        <%== article.title %>
-    </div>
-      <div class="card-body small">
-          <%= link_to "View private notes", article_path(:id => article.id), class: 'card-link' %></br>
-          <%= link_to "View public notes", article_path(:id => article.id, :query => "public"), class: 'card-link' %>
-          
-      </div>
-
-
-  </div> -->
