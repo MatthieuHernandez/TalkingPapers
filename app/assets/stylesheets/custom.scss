@@ -119,10 +119,6 @@ p {
   border-color:$secondary-dark;
 }
 
-.navbar-light .navbar-nav .nav-link {
-  color: $text-dark;
-}
-
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
   color: $text-dark;
   background-color: $secondary-light;
@@ -376,18 +372,22 @@ input[type="radio"] {
   word-wrap:break-word;
 }
 
-/* Navbar*/
-
+/* Navbar */
 
 
 .dropdown .dropdown-menu .dropdown-item {color:$dark; background:$light; text-decoration: none;}
 
-.navbar .dropdown-menu {
-  background-color: $light;
+.navbar{
+  background: linear-gradient( rgb(233, 236, 239) 0%, rgb(248, 249, 250) 75%)
+  //background: linear-gradient(0deg,rgb(255, 0, 0) 10%, rgb(0, 255, 0) 100%)
 }
 
 .navbar .dropdown.show a { 
   background-color: $light;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: $text-dark;
 }
 
 
