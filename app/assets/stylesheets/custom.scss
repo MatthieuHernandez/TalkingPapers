@@ -66,6 +66,18 @@ p {
   line-height: 1.7em;
 }
 
+.article-title {
+  font-weight: 600;
+}
+.talking-papers {
+  font-size: 1.5em;
+  font-weight: 700;
+  user-select: none;
+  margin-left: 8px;
+  margin-top: -2px;
+  color: #212529;
+}
+
 /* button */
 
 .btn-primary {
@@ -105,10 +117,6 @@ p {
 .nav-tabs {
   margin: -1px 0px 0px -1px;
   border-color:$secondary-dark;
-}
-
-.navbar-light .navbar-nav .nav-link {
-  color: $text-dark;
 }
 
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
@@ -364,18 +372,22 @@ input[type="radio"] {
   word-wrap:break-word;
 }
 
-/* Navbar*/
-
+/* Navbar */
 
 
 .dropdown .dropdown-menu .dropdown-item {color:$dark; background:$light; text-decoration: none;}
 
-.navbar .dropdown-menu {
-  background-color: $light;
+.navbar{
+  background: linear-gradient( rgb(242, 245, 247) 0%, rgb(248, 249, 250) 85%);
+  //box-shadow: 0px 1px 16px #e8e8e8;
 }
 
 .navbar .dropdown.show a { 
   background-color: $light;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: $text-dark;
 }
 
 
@@ -444,8 +456,13 @@ input[type="radio"] {
 
 /* card */
 
+.search-card {
+  border: 1px solid $secondary-dark;
+}
+
 .card {
   border: 1px solid $secondary-dark;
+  box-shadow: 0px 0px 4px #c3c6c9;
 }
 
 .card-body {

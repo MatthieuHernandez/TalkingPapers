@@ -1,47 +1,45 @@
 
- <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+<nav class="navbar fixed-top navbar-expand-lg navbar-light">
   <div class = "container">
-    <%= link_to image_tag("talkingpapersv6.png", height: "38", class: "mr-2"), root_path %>
-<!--     <div style="font-family:helvetica; font-weight:bold" class="mr-4">TalkingPapers</div>
- -->   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <%= render partial: 'layouts/logo' %>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item mx-1">
-        <li><%= link_to "About", about_path, class:"nav-link" %></li>
-       </li>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item mx-1">
+          <li><%= link_to "About", about_path, class:"nav-link" %></li>
+        </li>
 
-      <% if logged_in? %>
+        <% if logged_in? %>
 
-      <li class="nav-item mx-1">
-        <li><%= link_to "Users", users_path, class:"nav-link" %></li>
-       </li>
+        <li class="nav-item mx-1">
+          <li><%= link_to "Users", users_path, class:"nav-link" %></li>
+        </li>
 
-      <li class="nav-item mx-1">
-        <li><%= link_to "Profile", current_user, class:"nav-link" %></li>
-      </li>
+        <li class="nav-item mx-1">
+          <li><%= link_to "Profile", current_user, class:"nav-link" %></li>
+        </li>
 
-      <li class="nav-item dropdown mx-1">
-        <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" 
-        aria-expanded="false">
-          Account <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-         
-          <li><%= link_to "Settings", edit_user_path(current_user), class:"dropdown-item" %></li>
-          <div class="dropdown-divider"></div>
-          <li>
-            <%= link_to "Log out", logout_path, method: "delete", class:"dropdown-item" %>
-          </li>
-        </ul>
+        <li class="nav-item dropdown mx-1">
+          <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" 
+          aria-expanded="false">
+            Account <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          
+            <li><%= link_to "Settings", edit_user_path(current_user), class:"dropdown-item" %></li>
+            <div class="dropdown-divider"></div>
+            <li>
+              <%= link_to "Log out", logout_path, method: "delete", class:"dropdown-item" %>
+            </li>
+          </ul>
 
-      <% else %>
-        <li class="nav-item mx-1"><%= link_to "Log in", login_path, class:"nav-link" %></li>
-      <% end %>
-    </ul>
-
+        <% else %>
+          <li class="nav-item mx-1"><%= link_to "Log in", login_path, class:"nav-link" %></li>
+        <% end %>
+      </ul>
+    </div>
   </div>
-</div>
 </nav>
