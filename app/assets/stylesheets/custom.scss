@@ -378,8 +378,8 @@ input[type="radio"] {
 .dropdown .dropdown-menu .dropdown-item {color:$dark; background:$light; text-decoration: none;}
 
 .navbar{
-  background: linear-gradient( rgb(233, 236, 239) 0%, rgb(248, 249, 250) 75%)
-  //background: linear-gradient(0deg,rgb(255, 0, 0) 10%, rgb(0, 255, 0) 100%)
+  background: linear-gradient( rgb(242, 245, 247) 0%, rgb(248, 249, 250) 85%);
+  //box-shadow: 0px 1px 16px #e8e8e8;
 }
 
 .navbar .dropdown.show a { 
@@ -456,8 +456,13 @@ input[type="radio"] {
 
 /* card */
 
+.search-card {
+  border: 1px solid $secondary-dark;
+}
+
 .card {
   border: 1px solid $secondary-dark;
+  box-shadow: 0px 0px 4px #c3c6c9;
 }
 
 .card-body {
