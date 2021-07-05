@@ -10,7 +10,8 @@ $secondary        : #e9ecef;
 $secondary-light  : #ffffff;
 $secondary-dark   : #b7babd;
 
-$text-dark        : #515960;
+$text        : #515960;
+$text-dark   : #212529;
 
 body {
 padding-top: 60px;
@@ -75,7 +76,7 @@ p {
   user-select: none;
   margin-left: 8px;
   margin-top: -2px;
-  color: #212529;
+  color: $text-dark;
 }
 
 /* button */
@@ -120,7 +121,7 @@ p {
 }
 
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
-  color: $text-dark;
+  color: $text;
   background-color: $secondary-light;
   border-color: $secondary-dark $secondary-dark $secondary-light;
 }
@@ -155,7 +156,7 @@ footer {
 }
 
 footer a {
-  color: $text-dark;
+  color: $text;
 }
 
 footer a:hover {
@@ -387,7 +388,7 @@ input[type="radio"] {
 }
 
 .navbar-light .navbar-nav .nav-link {
-  color: $text-dark;
+  color: $text;
 }
 
 
