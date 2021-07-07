@@ -1,3 +1,53 @@
 // Place all the styles related to the Sessions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.connect-table {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+.social-signup {
+    margin: 0 auto;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #b7babd;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+a.btn-connect-option.facebook {
+    background: #4367b0 url(/assets/btn-connect-option.png) 0 0/60px 120px no-repeat;
+    border-radius: 0.25em;
+    width: 210px;
+    height: 60px;
+    margin-right: 20px;
+}
+
+a.btn-connect-option.google {
+    background: #4585f1 url(/assets/btn-connect-option.png) 0 -60px/60px 120px no-repeat;
+    border-radius: 0.25em;
+    width: 210px;
+    height: 60px;
+}
+
+a.btn-connect-option.google:hover {
+    background-color: #5795ff;
+}
+
+a.btn-connect-option.facebook:hover {
+    background-color: #4d76c9;
+}
+
+a.btn-connect-option {
+    text-decoration: none;
+    display: block;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    width: 145px;
+    height: 30px;
+    line-height: 28px;
+    text-align: center;
+    padding: 15px 15px 15px 60px;
+    border-radius: 2px;
+}
