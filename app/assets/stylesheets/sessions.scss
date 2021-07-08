@@ -7,27 +7,31 @@
     margin-right: auto;
   }
 
+.gray-text {
+    color:#515960;
+    margin-bottom: 8px;
+}
+
+.gray-text-2 {
+    color:#515960;
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
 .social-signup {
-    margin: 0 auto;
     padding-bottom: 20px;
     border-bottom: 1px solid #b7babd;
     overflow: hidden;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 a.btn-connect-option.facebook {
-    background: #4367b0 url(/assets/btn-connect-option.png) 0 0/60px 120px no-repeat;
-    border-radius: 0.25em;
-    width: 210px;
-    height: 60px;
+    background: #4367b0 url(/assets/btn-connect-option.png) -10px -10px/60px 120px no-repeat;
     margin-right: 20px;
 }
 
 a.btn-connect-option.google {
-    background: #4585f1 url(/assets/btn-connect-option.png) 0 -60px/60px 120px no-repeat;
-    border-radius: 0.25em;
-    width: 210px;
-    height: 60px;
+    background: #4585f1 url(/assets/btn-connect-option.png) -10px -70px/60px 120px no-repeat;
 }
 
 a.btn-connect-option.google:hover {
@@ -40,14 +44,14 @@ a.btn-connect-option.facebook:hover {
 
 a.btn-connect-option {
     text-decoration: none;
+    border-radius: 3px;
     display: block;
     font-size: 20px;
     font-weight: 700;
     color: #fff;
-    width: 145px;
-    height: 30px;
+    width: 160px;
+    height: 40px;
     line-height: 28px;
     text-align: center;
-    padding: 15px 15px 15px 60px;
-    border-radius: 2px;
+    padding: 4px 10px 10px 40px;
 }
