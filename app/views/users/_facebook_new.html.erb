@@ -4,8 +4,38 @@
   <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
 </div>-->
 
+<script>
+  function fb_login(){
+      FB.login(function(response) {
+
+          if (response.authResponse) {
+              console.log('Welcome!  Fetching your information.... ');
+              access_token = response.authResponse.accessToken; //get access token
+              user_id = response.authResponse.userID; //get FB UID
+
+              FB.api('/me', function(response) {
+                  console.log('Facebook user: ', response);
+                  console.log('Facebook email: ', response.email);
+              });
+
+          } else {
+              //user hit cancel button
+              console.log('User cancelled login or did not fully authorize.');
+
+          }
+      }, {
+          scope: 'public_profile, email'
+      });
+  }
+</script>
+
 <div id="facebook-sigin">
-  <a class="btn-connect-option facebook" href="/connect/facebook?next=%2F"> Facebook </a>
+  <% if Rails.env.production? %>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v11.0&appId=671276493763035&autoLogAppEvents=1" nonce="jSQTwxa4"></script>
+  <% else %>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v11.0&appId=1469998833343189&autoLogAppEvents=1" nonce="jSQTwxa4"></script>
+  <% end %>
+  <a class="btn-connect-option facebook" href="#" onclick="fb_login();"> Facebook </a>
 </div>
 
 <!--<script>
