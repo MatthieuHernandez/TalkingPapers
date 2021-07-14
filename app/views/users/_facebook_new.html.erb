@@ -13,10 +13,12 @@
               access_token = response.authResponse.accessToken; //get access token
               user_id = response.authResponse.userID; //get FB UID
 
-              FB.api('/me', function(response) {
-                  console.log('Facebook user: ', response);
-                  console.log('Facebook email: ', response.email);
+              FB.api('/me', {fields: 'id, name, email'}, function(response) {
+                  console.log('Facebook user : ', response);
+                  console.log('user_id : ', user_id);
               });
+
+              $.ajax("/users/new");
 
           } else {
               //user hit cancel button
@@ -26,6 +28,24 @@
       }, {
           scope: 'public_profile, email'
       });
+
+      /*
+      curl -i -X GET \
+ "https://graph.facebook.com/v11.0/{user-id}/picture?width=80&height=80"
+ <img src=\"" . $profile_pic . "\" />
+      FB.api(
+  '/100070836482779/picture?width=100',
+  'GET',
+  {
+        "redirect": false,
+        "height": "80",
+        "type": "normal",
+        "width": "80"
+    },,
+  function(response) {
+      // Insert your code here
+  }
+);*/
   }
 </script>
 
