@@ -28,6 +28,13 @@ class UsersController < ApplicationController
         end
     end
 
+    def get_or_create_from_provider
+        puts'======================================================'
+        puts 'get_or_create_from_provider'
+        puts'======================================================'
+        redirect_to root_url
+    end
+
     def edit
         @user = User.find(params[:id])
     end

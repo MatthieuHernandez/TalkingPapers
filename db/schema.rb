@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_10_225228) do
+ActiveRecord::Schema.define(version: 2021_07_15_174433) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,11 +60,11 @@ ActiveRecord::Schema.define(version: 2021_06_10_225228) do
     t.text "note_text", null: false
     t.string "note_type", null: false
     t.integer "user_id"
-    t.boolean "is_public"
+    t.boolean "is_public", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "username"
-    t.boolean "is_anon", null: false
+    t.boolean "is_anon", default: false, null: false
     t.integer "parent_note_id"
   end
 
@@ -73,14 +73,17 @@ ActiveRecord::Schema.define(version: 2021_06_10_225228) do
     t.string "email", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "password_digest", null: false
+    t.string "password_digest"
     t.string "remember_digest"
-    t.boolean "admin", null: false
+    t.boolean "admin", default: false, null: false
     t.string "activation_digest"
     t.boolean "activated", default: false, null: false
     t.datetime "activated_at"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
+    t.string "provider"
+    t.string "external_id"
+    t.string "picture_link"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

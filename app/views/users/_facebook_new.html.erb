@@ -6,7 +6,10 @@
 
 <script>
   function fb_login(){
-      FB.login(function(response) {
+
+    window.location.assign('<%= connect_path %>');
+      //$.ajax("/session/connection");
+      /*FB.login(function(response) {
 
           if (response.authResponse) {
               console.log('Welcome!  Fetching your information.... ');
@@ -18,7 +21,7 @@
                   console.log('user_id : ', user_id);
               });
 
-              $.ajax("/users/new");
+              $.ajax("/session/connection");
 
           } else {
               //user hit cancel button
@@ -27,7 +30,7 @@
           }
       }, {
           scope: 'public_profile, email'
-      });
+      });*/
 
       /*
       curl -i -X GET \
