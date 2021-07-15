@@ -44,7 +44,7 @@ class UsersController < ApplicationController
 
     def destroy
         if current_user && current_user.id == session[:user_id]
-            if current_user.authenticate(params[:session][:password])
+            if current_user_signed_in?
                 User.find(current_user.id).destroy
                 destroy_notes
                 flash[:success] = 'Account deleted'

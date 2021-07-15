@@ -10,7 +10,6 @@ gem 'active_storage_validations', '0.8.2'
 gem 'pagedown-rails', '~> 1.1.4'
 gem "nokogiri", ">= 1.4.2"
 gem "kramdown", "2.3.0"
-gem 'bcrypt', '3.1.13'
 gem 'faker', '2.1.2'
 gem 'will_paginate-bootstrap4'
 gem 'bootstrap-will_paginate', '1.0.0'
@@ -22,7 +21,10 @@ gem 'sass-rails', '6.0.0'
 gem 'webpacker',  '4.2.2'
 gem 'jbuilder',   '2.10.0'
 gem 'bootsnap',   '1.4.6', require: false
-gem "aws-sdk-s3", require: false
+gem 'devise'
+gem 'omniauth-facebook'
+gem 'omniauth-google'
+gem 'omniauth-github'
 
 group :development, :test do
   gem 'sqlite3', '1.4.2'

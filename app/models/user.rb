@@ -1,17 +1,22 @@
+require 'bcrypt'
 class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, :omniauth_providers => [:facebook]
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save :downcase_email
-  #before_create :create_activation_digest
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true
-  has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   has_many :notes
   has_many :articles_with_notes, :through => :notes, :source => :article
   has_many :comments
+
   # Returns the hash digest of the given string.
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -28,6 +33,30 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, User.digest(remember_token))
   end
 
+  def self.new_with_session(params, session)
+    super.tap do |user|
+      if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
+        user.email = data["email"] if user.email.blank?
+      end
+    end
+  end
+  
+  def self.from_omniauth(auth)
+    puts '====== TOTO ======'
+    where(provider: auth.provider, external_id: auth.uid).first_or_create do |user|
+      puts '====== 1) ======'
+      user.email = auth.info.email
+      puts '====== 2) ======'
+      user.password = 'secret'            # Devise.friendly_token[0,20]
+      puts '====== 3) ======'
+      user.name = auth.info.name          # assuming the user model has a name
+      puts '====== 4) ======'
+      user.picture_link = auth.info.image # assuming the user model has an image
+      puts '====== 5) ======'
+    end
+    puts '====== TOTO ======'
+  end
+
   # Returns true if the given token matches the digest.
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
@@ -37,7 +66,7 @@ class User < ApplicationRecord
 
   # Forgets a user.
   def forget
-    update_attribute(:remember_digest, nil)
+    update_attribute(:remember_token, nil)
   end
 
  # Activates an account.
@@ -55,8 +84,8 @@ class User < ApplicationRecord
   # Sets the password reset attributes.
   def create_reset_digest
     self.reset_token = User.new_token
-    update_attribute(:reset_digest, User.digest(reset_token))
-    update_attribute(:reset_sent_at, Time.zone.now)
+    update_attribute(:reset_password_token, User.digest(reset_token))
+    update_attribute(:reset_password_sent_at, Time.zone.now)
   end
 
   # Sends password reset email.
@@ -66,7 +95,7 @@ class User < ApplicationRecord
 
   # Returns true if a password reset has expired.
   def password_reset_expired?
-    reset_sent_at < 2.hours.ago
+    reset_password_sent_at < 2.hours.ago
   end
 
 

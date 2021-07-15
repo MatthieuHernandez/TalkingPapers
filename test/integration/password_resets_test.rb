@@ -5,6 +5,8 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
   def setup
     ActionMailer::Base.deliveries.clear
     @user = users(:michael)
+    @reset_password_token  = @user.send_reset_password_instructions
+    puts "@reset_password_token = #{reset_password_token}"
   end
   test "password resets" do
     get new_password_reset_path
@@ -17,7 +19,7 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
     # Valid email
     post password_resets_path,
          params: { password_reset: { email: @user.email } }
-    assert_not_equal @user.reset_digest, @user.reload.reset_digest
+    assert_not_equal @user.reset_password_token , @user.reload.reset_password_token 
     assert_equal 1, ActionMailer::Base.deliveries.size
     assert_not flash.empty?
     assert_redirected_to root_url

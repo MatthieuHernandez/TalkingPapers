@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
   def create
     email = params[:session][:email].downcase
     user = User.find_by(email: email)
-    if user && user.authenticate(params[:session][:password])
+    if user && user_signed_in?
       if user.activated?
         log_in user
         params[:session][:remember_me] == '1' ? remember(user) : forget(user)

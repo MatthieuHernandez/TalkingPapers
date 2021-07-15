@@ -7,7 +7,10 @@
     Connect with a social network
     </div>
     <table class="connect-table"><tr>
-      <td><%= render partial: 'users/facebook_new' %></td>
+      <td>
+      <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %>
+      <!--<%= render partial: 'users/facebook_new' %>-->
+      </td>
       <td><%= render partial: 'users/google_new' %></td>
       </tr></table>
     </div>
