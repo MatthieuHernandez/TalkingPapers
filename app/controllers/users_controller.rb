@@ -29,9 +29,12 @@ class UsersController < ApplicationController
     end
 
     def get_or_create_from_provider
-        puts'======================================================'
-        puts 'get_or_create_from_provider'
-        puts'======================================================'
+        #user = User.find_by(email: params[:email])
+        #if user.nil?
+        #    @user = User.new(user_params_from_provider)
+        #else
+        #    @user = user
+        #end
         redirect_to root_url
     end
 
@@ -70,6 +73,10 @@ class UsersController < ApplicationController
 
     def user_params
         params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    end
+
+    def user_params_from_provider
+        params.require(:user).permit(:name, :email, :provider, :external_id, :picture_link)
     end
 
     # Confirms a logged-in user.

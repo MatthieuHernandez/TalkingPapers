@@ -6,31 +6,36 @@
 
 <script>
   function fb_login(){
+    FB.login(function(response) {
 
-    window.location.assign('<%= connect_path %>');
-      //$.ajax("/session/connection");
-      /*FB.login(function(response) {
+      if (response.authResponse) {
+          console.log('Welcome!  Fetching your information.... ');
+          access_token = response.authResponse.accessToken; //get access token
+          user_id = response.authResponse.userID; //get FB UID
 
-          if (response.authResponse) {
-              console.log('Welcome!  Fetching your information.... ');
-              access_token = response.authResponse.accessToken; //get access token
-              user_id = response.authResponse.userID; //get FB UID
+          FB.api('/me', {fields: 'id, name, email'}, function(response) {
+              console.log('Facebook user : ', response);
+              console.log('user_id : ', user_id);
+          });
 
-              FB.api('/me', {fields: 'id, name, email'}, function(response) {
-                  console.log('Facebook user : ', response);
-                  console.log('user_id : ', user_id);
-              });
+          $.ajax(
+            type: "POST",
+            url: "/session/connection",
+            data: data: JSON.stringify({
+              'name': response.name,
+              'email': response.email,
+              'provider': 'Facebook',
+              'external_id': response.id,
+              'picture_link': 'none',
+              }));
 
-              $.ajax("/session/connection");
-
-          } else {
-              //user hit cancel button
-              console.log('User cancelled login or did not fully authorize.');
-
-          }
-      }, {
-          scope: 'public_profile, email'
-      });*/
+      } else {
+          console.log('User cancelled login or did not fully authorize.');
+      }
+    }, {
+        scope: 'public_profile, email'
+    });
+    //window.location.assign('<%= connect_path %>');
 
       /*
       curl -i -X GET \
