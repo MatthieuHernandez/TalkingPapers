@@ -29,12 +29,12 @@ class UsersController < ApplicationController
     end
 
     def get_or_create_from_provider
-        #user = User.find_by(email: params[:email])
-        #if user.nil?
-        #    @user = User.new(user_params_from_provider)
-        #else
-        #    @user = user
-        #end
+        user = User.find_by(email: params[:email])
+        if user.nil?
+            @user = User.new(user_params_from_provider)
+        else
+            @user = user
+        end
         redirect_to root_url
     end
 
@@ -76,7 +76,19 @@ class UsersController < ApplicationController
     end
 
     def user_params_from_provider
-        params.require(:user).permit(:name, :email, :provider, :external_id, :picture_link)
+        params.require(:user).permit(:name, :email, :provider, :external_id, :external_token)
+    end
+
+    def verify_facebook
+        require 'net/http'
+require 'json'
+
+url = URI.parse('http://video_tak.com/courses/get_course/1')
+req = Net::HTTP::Get.new(url.to_s)
+res = Net::HTTP.start(url.host, url.port) do |http|
+  http.request(req)
+end
+course_json = JSON.parse(res.body)
     end
 
     # Confirms a logged-in user.
