@@ -47,7 +47,7 @@
     }, {
         scope: 'public_profile, email'
     });*/
-    window.location.assign('<%= connect_path(name: 'toto', email: 'toto@gmail.com', provider: 'Facebook', external_id: '123456789', external_token: '777') %>');
+    window.location.assign('<%= connect_path(name: 'toto', email: 'toto@gmail.com', provider: 'Facebook', external_id: '123456789', external_token: '777').html_safe %>');
     
 
       /*

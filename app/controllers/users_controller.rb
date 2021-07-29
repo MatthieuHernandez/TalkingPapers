@@ -31,7 +31,16 @@ class UsersController < ApplicationController
     def get_or_create_from_provider
         user = User.find_by(email: params[:email])
         if user.nil?
+            puts '===> NEW USER <==='
             @user = User.new(user_params_from_provider)
+            @user.admin = false
+            @user.activated = true
+            @user.password = 'Hernandez123'
+            if @user.save
+                puts '===> USER SAVED <==='
+            else
+                puts '===> USER FAILED <==='
+            end
         else
             @user = user
         end
@@ -76,7 +85,7 @@ class UsersController < ApplicationController
     end
 
     def user_params_from_provider
-        params.require(:user).permit(:name, :email, :provider, :external_id, :external_token)
+        params.permit(:name, :email, :provider, :external_id, :external_token)
     end
 
     def verify_facebook

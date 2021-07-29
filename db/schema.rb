@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 2021_07_15_174433) do
     t.datetime "reset_sent_at"
     t.string "provider"
     t.string "external_id"
+    t.string "external_token"
     t.string "picture_link"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
