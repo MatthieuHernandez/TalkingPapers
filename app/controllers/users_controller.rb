@@ -1,3 +1,6 @@
+require 'net/http'
+require 'json'
+
 class UsersController < ApplicationController
     before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
     before_action :correct_user,     only: [:edit, :update]
@@ -34,9 +37,10 @@ class UsersController < ApplicationController
             puts '===> NEW USER <==='
             @user = User.new(user_params_from_provider)
             @user.admin = false
+            if()
             @user.activated = true
-            @user.password = 'Hernandez123'
-            if @user.save
+            @user.password = random_password
+            if verify_provider && @user.save
                 puts '===> USER SAVED <==='
             else
                 puts '===> USER FAILED <==='
@@ -85,20 +89,39 @@ class UsersController < ApplicationController
     end
 
     def user_params_from_provider
-        params.permit(:name, :email, :provider, :external_id, :external_token)
+        params.permit(:name, :email, :provider, :external_id, :access_token)
+    end
+
+    def verify_provider
+        case params[:provider]
+        when 'Facebook'
+            return verify_facebook
+        when 'Google'
+            reutn verify_google
+        else
+            return false
+        end
     end
 
     def verify_facebook
-        require 'net/http'
-require 'json'
-
-url = URI.parse('http://video_tak.com/courses/get_course/1')
-req = Net::HTTP::Get.new(url.to_s)
-res = Net::HTTP.start(url.host, url.port) do |http|
-  http.request(req)
-end
-course_json = JSON.parse(res.body)
+        begin
+            puts "ACCESS_TOKEN = #{params[:access_token]}"
+            url = URI.parse("https://graph.facebook.com/me?access_token=#{params[:access_token]}")
+            res = Net::HTTP.get_response(URI.parse(source))
+            data = res.body
+            result = JSON.parse(res.body)
+            if result[:error] == nil && result[:data] != nil
+                return true
+            end
+        rescue
+        end
+        return false
+     end
+    
+    def verify_google
+        return false
     end
+
 
     # Confirms a logged-in user.
     def logged_in_user
@@ -131,6 +154,11 @@ course_json = JSON.parse(res.body)
                 note.destroy
             end
         end
+    end
+
+    def random_password(length = 10)
+        chars = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a
+        chars.sort_by { rand }.join[0...length]
     end
 
 end
