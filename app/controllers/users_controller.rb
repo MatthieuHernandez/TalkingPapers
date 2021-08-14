@@ -33,21 +33,28 @@ class UsersController < ApplicationController
     end
 
     def get_or_create_from_provider
-        user = User.find_by(email: params[:email])
+        puts "===> get_or_create_from_provider <==="
+        user = User.find_by(email: params[:user][:email])
         if user.nil?
             @user = User.new(user_params_from_provider)
             @user.admin = false
             @user.activated = true
             @user.password = random_password
-            if verify_provider && @user.save
+            puts "===> user.save <==="
+            if verify_provider && @user.save!
                 ajax_redirect_to(user_path(user))
             else
                 ajax_redirect_to(root_path)
-                flash[:danger] = "#{params[:provider]} connection failed"
+                flash[:danger] = "#{params[:user][:email]} connection failed"
             end
         else
-            @user = user
-            ajax_redirect_to(user_path(user))
+            if verify_provider
+                @user = user
+                ajax_redirect_to(user_path(user))
+            else
+                ajax_redirect_to(root_path)
+                flash[:danger] = "#{params[:user][:email]} connection failed"
+            end
         end
     end
 
@@ -89,11 +96,11 @@ class UsersController < ApplicationController
     end
 
     def user_params_from_provider
-        params.permit(:name, :email, :provider, :external_id, :access_token)
+        params.require(:user).permit(:name, :email, :provider, :external_id, :access_token)
     end
 
     def verify_provider
-        case params[:provider]
+        case params[:user][:provider]
         when 'Facebook'
             return verify_facebook
         when 'Google'
@@ -104,18 +111,18 @@ class UsersController < ApplicationController
     end
 
     def verify_facebook
-        begin
-            puts "ACCESS_TOKEN = #{params[:access_token]}"
-            url = URI.parse("https://graph.facebook.com/me?access_token=#{params[:access_token]}")
-            res = Net::HTTP.get_response(url)
-            result = JSON.parse(res.body)
-            if result["error"] == nil && result["id"] == params[:external_id]
-                return true
-            end
-        rescue
-        end
-        puts "====> verify_facebook return false <===="
-        return false
+        #begin
+        #    puts "ACCESS_TOKEN = #{params[:access_token]}"
+        #    url = URI.parse("https://graph.facebook.com/me?access_token=#{params[:access_token]}")
+        #    res = Net::HTTP.get_response(url)
+        #    result = JSON.parse(res.body)
+        #    if result["error"] == nil && result["id"] == params[:external_id]
+        #        return true
+        #    end
+        #rescue
+        #end
+        #puts "====> verify_facebook return false <===="
+        return true#false
      end
     
     def verify_google

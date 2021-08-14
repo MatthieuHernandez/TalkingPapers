@@ -1,25 +1,23 @@
 <script type="text/javascript">
   function fb_login(){
     FB.login(function(response) {
-
       if (response.authResponse) {
         access_token = response.authResponse.accessToken;
         user_id = response.authResponse.userID;
         FB.api('/me', {fields: 'id, name, email'}, function(response) {
-              console.log('Facebook user : ', response);
-              console.log('user_id : ', user_id);
-              console.log('access_token : ', access_token);
-          });
           $.ajax({
             type: "GET",
             url: "/connect",
             data: {
-              name: response.name,
-              email: response.email,
-              provider: "Facebook",
-              external_id:  user_id,
-              access_token: access_token
+              user: {
+                name: response.name,
+                email: response.email,
+                provider: "Facebook",
+                external_id:  user_id,
+                access_token: access_token
+              }
             }
+          });
           });
       } else {
         console.log('User cancelled login or did not fully authorize.');
