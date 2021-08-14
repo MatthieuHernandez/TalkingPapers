@@ -33,15 +33,14 @@ class UsersController < ApplicationController
     end
 
     def get_or_create_from_provider
-        puts "===> get_or_create_from_provider <==="
         user = User.find_by(email: params[:user][:email])
         if user.nil?
             @user = User.new(user_params_from_provider)
             @user.admin = false
             @user.activated = true
             @user.password = random_password
-            puts "===> user.save <==="
             if verify_provider && @user.save!
+                log_in @user
                 ajax_redirect_to(user_path(user))
             else
                 ajax_redirect_to(root_path)
@@ -50,6 +49,7 @@ class UsersController < ApplicationController
         else
             if verify_provider
                 @user = user
+                log_in @user
                 ajax_redirect_to(user_path(user))
             else
                 ajax_redirect_to(root_path)
