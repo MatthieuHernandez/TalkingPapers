@@ -2,6 +2,7 @@ require 'net/http'
 require 'json'
 
 class UsersController < ApplicationController
+    include ApplicationHelper
     before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
     before_action :correct_user,     only: [:edit, :update]
     #before_action :admin_user, only: :destroy
@@ -27,28 +28,27 @@ class UsersController < ApplicationController
             flash[:info] = 'Please check your email to activate your account.'
             redirect_to root_url
         else
-            render 'new'
+            render user_path(user)
         end
     end
 
     def get_or_create_from_provider
         user = User.find_by(email: params[:email])
         if user.nil?
-            puts '===> NEW USER <==='
             @user = User.new(user_params_from_provider)
             @user.admin = false
-            if()
             @user.activated = true
             @user.password = random_password
             if verify_provider && @user.save
-                puts '===> USER SAVED <==='
+                ajax_redirect_to(user_path(user))
             else
-                puts '===> USER FAILED <==='
+                ajax_redirect_to(root_path)
+                flash[:danger] = "#{params[:provider]} connection failed"
             end
         else
             @user = user
+            ajax_redirect_to(user_path(user))
         end
-        redirect_to root_url
     end
 
     def edit
@@ -107,14 +107,14 @@ class UsersController < ApplicationController
         begin
             puts "ACCESS_TOKEN = #{params[:access_token]}"
             url = URI.parse("https://graph.facebook.com/me?access_token=#{params[:access_token]}")
-            res = Net::HTTP.get_response(URI.parse(source))
-            data = res.body
+            res = Net::HTTP.get_response(url)
             result = JSON.parse(res.body)
-            if result[:error] == nil && result[:data] != nil
+            if result["error"] == nil && result["id"] == params[:external_id]
                 return true
             end
         rescue
         end
+        puts "====> verify_facebook return false <===="
         return false
      end
     

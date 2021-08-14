@@ -39,4 +39,8 @@ require 'kramdown'
         end
         super *[collection_or_options, options].compact
     end
+
+    def ajax_redirect_to(path)
+        head 302, x_ajax_redirect_url: path
+    end
 end

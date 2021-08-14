@@ -1,72 +1,32 @@
-<!--<div id="facebook-sigin">
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v11.0&appId=671276493763035&autoLogAppEvents=1" nonce="jSQTwxa4"></script>
-  <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
-</div>-->
-
-<script>
+<script type="text/javascript">
   function fb_login(){
-
-    /*$.ajax(
-      type: "POST",
-      url: "/session/connection",
-      data: data: JSON.stringify({
-        'name': response.name,
-        'email': response.email,
-        'provider': 'Facebook',
-        'external_id': response.id,
-        'picture_link': 'none',
-        }));*/
-
-    /*FB.login(function(response) {
+    FB.login(function(response) {
 
       if (response.authResponse) {
-          console.log('Welcome!  Fetching your information.... ');
-          access_token = response.authResponse.accessToken; //get access token
-          user_id = response.authResponse.userID; //get FB UID
-
-          FB.api('/me', {fields: 'id, name, email'}, function(response) {
+        access_token = response.authResponse.accessToken;
+        user_id = response.authResponse.userID;
+        FB.api('/me', {fields: 'id, name, email'}, function(response) {
               console.log('Facebook user : ', response);
               console.log('user_id : ', user_id);
+              console.log('access_token : ', access_token);
           });
-
-          $.ajax(
-            type: "POST",
-            url: "/session/connection",
-            data: data: JSON.stringify({
-              'name': response.name,
-              'email': response.email,
-              'provider': 'Facebook',
-              'external_id': response.id,
-              'picture_link': 'none',
-              }));
-
+          $.ajax({
+            type: "GET",
+            url: "/connect",
+            data: {
+              name: response.name,
+              email: response.email,
+              provider: "Facebook",
+              external_id:  user_id,
+              access_token: access_token
+            }
+          });
       } else {
-          console.log('User cancelled login or did not fully authorize.');
+        console.log('User cancelled login or did not fully authorize.');
       }
     }, {
-        scope: 'public_profile, email'
-    });*/
-    window.location.assign('<%= connect_path(name: 'toto', email: 'toto@gmail.com', provider: 'Facebook', external_id: '123456789', external_token: '777').html_safe %>');
-    
-
-      /*
-      curl -i -X GET \
- "https://graph.facebook.com/v11.0/{user-id}/picture?width=80&height=80"
- <img src=\"" . $profile_pic . "\" />
-      FB.api(
-  '/100070836482779/picture?width=100',
-  'GET',
-  {
-        "redirect": false,
-        "height": "80",
-        "type": "normal",
-        "width": "80"
-    },,
-  function(response) {
-      // Insert your code here
-  }
-);*/
+      scope: 'public_profile, email'
+    });
   }
 </script>
 
@@ -78,55 +38,3 @@
   <% end %>
   <a class="btn-connect-option facebook" href="#" onclick="fb_login();"> Facebook </a>
 </div>
-
-<!--<script>
-  function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
-    console.log('statusChangeCallback');
-    console.log(response);                   // The current login status of the person.
-    if (response.status === 'connected') {   // Logged into your webpage and Facebook.
-      testAPI();  
-    } else {                                 // Not logged into your webpage or we are unable to tell.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this webpage.';
-    }
-  }
-
-  function checkLoginState() {               // Called when a person is finished with the Login Button.
-    FB.getLoginStatus(function(response) {   // See the onlogin handler
-      statusChangeCallback(response);
-    });
-  }
-
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '{app-id}',
-      cookie     : true,                     // Enable cookies to allow the server to access the session.
-      xfbml      : true,                     // Parse social plugins on this webpage.
-      version    : '{api-version}'           // Use this Graph API version for this call.
-    });
-
-    FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.
-      statusChangeCallback(response);        // Returns the login status.
-    });
-  };
- 
-  function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Successful login for: ' + response.name);
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
-    });
-  }
-
-</script>
-
-<-- The JS SDK Login Button ->
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
-
-<div id="status">
-</div>
-
-<-- Load the JS SDK asynchronously ->
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>-->
