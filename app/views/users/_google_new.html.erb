@@ -2,31 +2,20 @@
 
 <script type="text/javascript">
   function google_login(googleUser){
-    console.log("Success !!!");
-    // Useful data for your client-side scripts:
-    // const googleUser = gapi.auth2.getAuthInstance().currentUser.get();
-    const profile = googleUser.getBasicProfile();
-    console.log("Profile: " + profile);
-    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-    console.log('Full Name: ' + profile.getName());
-    console.log('Given Name: ' + profile.getGivenName());
-    console.log('Family Name: ' + profile.getFamilyName());
-    console.log("Image URL: " + profile.getImageUrl());
-    console.log("Email: " + profile.getEmail());
-
-    // The ID token you need to pass to your backend:
-    // var id_token = googleUser.getAuthResponse().id_token;
-    // console.log("ID Token: " + id_token);
-
+    var access_token = googleUser.getAuthResponse().id_token;
+    var profile = googleUser.getBasicProfile();
+    console.log("ID Token: " + access_token);
+    console.log("ID: " + profile.getId());
     /*$.ajax({
       type: "GET",
       url: "/connect",
       data: {
         user: {
-          name: response.name,
-          email: response.email,
-          provider: "Facebook",
-          external_id:  user_id,
+          name: profile.getName(),
+          email: profile.getEmail(),
+          provider: "Google",
+          external_id:  profile.getId(),
+          pictuire_link: profile.getImageUrl(),
           access_token: access_token
         }
       }
@@ -57,5 +46,5 @@
 
 <div id="google-sigin">
   <meta name="google-signin-scope" content="profile email">
-  <a class="btn-connect-option google"> Google </a>
+  <a class="btn-connect-option google" href="javascript:void(0);"> Google </a>
 </div>

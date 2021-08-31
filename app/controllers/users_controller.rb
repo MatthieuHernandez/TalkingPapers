@@ -96,7 +96,7 @@ class UsersController < ApplicationController
     end
 
     def user_params_from_provider
-        params.require(:user).permit(:name, :email, :provider, :external_id, :access_token)
+        params.require(:user).permit(:name, :email, :provider, :external_id, :picture_link, :access_token)
     end
 
     def verify_provider
@@ -111,21 +111,28 @@ class UsersController < ApplicationController
     end
 
     def verify_facebook
-        #begin
-        #    puts "ACCESS_TOKEN = #{params[:access_token]}"
-        #    url = URI.parse("https://graph.facebook.com/me?access_token=#{params[:access_token]}")
-        #    res = Net::HTTP.get_response(url)
-        #    result = JSON.parse(res.body)
-        #    if result["error"] == nil && result["id"] == params[:external_id]
-        #        return true
-        #    end
-        #rescue
-        #end
-        #puts "====> verify_facebook return false <===="
-        return true#false
+        begin
+            url = URI.parse("https://graph.facebook.com/me?access_token=#{params[:access_token]}")
+            res = Net::HTTP.get_response(url)
+            result = JSON.parse(res.body)
+            if result["error"] == nil && result["id"] == params[:external_id]
+                return true
+            end
+        rescue
+        end
+        return false
      end
     
     def verify_google
+        begin
+            url = URI.parse("https://oauth2.googleapis.com/tokeninfo?id_token=#{params[:access_token]}")
+            res = Net::HTTP.get_response(url)
+            result = JSON.parse(res.body)
+            if result["error"] == nil && result["sub"] == params[:external_id]
+                return true
+            end
+        rescue
+        end
         return false
     end
 
