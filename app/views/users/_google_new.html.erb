@@ -4,9 +4,7 @@
   function google_login(googleUser){
     var access_token = googleUser.getAuthResponse().id_token;
     var profile = googleUser.getBasicProfile();
-    console.log("ID Token: " + access_token);
-    console.log("ID: " + profile.getId());
-    /*$.ajax({
+    $.ajax({
       type: "GET",
       url: "/connect",
       data: {
@@ -15,11 +13,11 @@
           email: profile.getEmail(),
           provider: "Google",
           external_id:  profile.getId(),
-          pictuire_link: profile.getImageUrl(),
+          picture_link: profile.getImageUrl(),
           access_token: access_token
         }
       }
-    });*/
+    });
   }
 
   function onLoad() {

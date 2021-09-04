@@ -41,7 +41,7 @@ class UsersController < ApplicationController
             @user.password = random_password
             if verify_provider && @user.save!
                 log_in @user
-                ajax_redirect_to(user_path(user))
+                ajax_redirect_to(user_path(@user))
             else
                 ajax_redirect_to(root_path)
                 flash[:danger] = "#{params[:user][:email]} connection failed"
@@ -50,7 +50,7 @@ class UsersController < ApplicationController
             if verify_provider
                 @user = user
                 log_in @user
-                ajax_redirect_to(user_path(user))
+                ajax_redirect_to(user_path(@user))
             else
                 ajax_redirect_to(root_path)
                 flash[:danger] = "#{params[:user][:email]} connection failed"
@@ -104,7 +104,7 @@ class UsersController < ApplicationController
         when 'Facebook'
             return verify_facebook
         when 'Google'
-            reutn verify_google
+            return verify_google
         else
             return false
         end
@@ -112,10 +112,11 @@ class UsersController < ApplicationController
 
     def verify_facebook
         begin
-            url = URI.parse("https://graph.facebook.com/me?access_token=#{params[:access_token]}")
+            url = URI.parse("https://graph.facebook.com/me?access_token=#{params[:user][:access_token]}")
+            puts("https://graph.facebook.com/me?access_token=#{params[:user][:access_token]}")
             res = Net::HTTP.get_response(url)
             result = JSON.parse(res.body)
-            if result["error"] == nil && result["id"] == params[:external_id]
+            if result["error"] == nil && result["id"] == params[:user][:external_id]
                 return true
             end
         rescue
@@ -125,10 +126,11 @@ class UsersController < ApplicationController
     
     def verify_google
         begin
-            url = URI.parse("https://oauth2.googleapis.com/tokeninfo?id_token=#{params[:access_token]}")
+            url = URI.parse("https://oauth2.googleapis.com/tokeninfo?id_token=#{params[:user][:access_token]}")
+            puts("===> https://oauth2.googleapis.com/tokeninfo?id_token=#{params[:user][:access_token]}")
             res = Net::HTTP.get_response(url)
             result = JSON.parse(res.body)
-            if result["error"] == nil && result["sub"] == params[:external_id]
+            if result["error"] == nil && result["sub"] == params[:user][:external_id]
                 return true
             end
         rescue
