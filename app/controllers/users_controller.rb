@@ -33,6 +33,7 @@ class UsersController < ApplicationController
             end
         else
             flash.now[:danger] = "Username connot be blank."
+            render 'new'
         end
     end
 
