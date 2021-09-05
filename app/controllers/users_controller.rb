@@ -22,13 +22,17 @@ class UsersController < ApplicationController
 
     def create
         @user = User.new(user_params)
-        @user.admin = false
-        if @user.save
-            @user.send_activation_email
-            flash[:info] = 'Please check your email to activate your account.'
-            redirect_to root_url
+        if !@user.name.blank?
+            @user.admin = false
+            if @user.save
+                @user.send_activation_email
+                flash[:info] = 'Please check your email to activate your account.'
+                redirect_to root_url
+            else
+                render user_path(user)
+            end
         else
-            render user_path(user)
+            flash.now[:danger] = "Username connot be blank."
         end
     end
 
