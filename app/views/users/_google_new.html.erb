@@ -1,0 +1,48 @@
+<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+
+<script type="text/javascript">
+  function google_login(googleUser){
+    var access_token = googleUser.getAuthResponse().id_token;
+    var profile = googleUser.getBasicProfile();
+    $.ajax({
+      type: "GET",
+      url: "/connect",
+      data: {
+        user: {
+          name: profile.getName(),
+          email: profile.getEmail(),
+          provider: "Google",
+          external_id:  profile.getId(),
+          picture_link: profile.getImageUrl(),
+          access_token: access_token
+        }
+      }
+    });
+  }
+
+  function onLoad() {
+    gapi.load('auth2', function() {
+      auth2 = gapi.auth2.init({
+        client_id: '222756129976-amfq45udboo59s76f89d6skqu460moeh.apps.googleusercontent.com',
+        cookiepolicy: 'single_host_origin',
+        // Request scopes in addition to 'profile' and 'email'
+        //scope: 'additional_scope'
+      });
+      attachSignin(document.getElementById('google-sigin'));
+    });
+  }
+
+  function attachSignin(element) {
+  auth2.attachClickHandler(element, {},
+    function(googleUser) {
+        google_login(googleUser);
+      }, function(error) {
+        // alert(JSON.stringify(error, undefined, 2));
+      });
+  }
+</script>
+
+<div id="google-sigin">
+  <meta name="google-signin-scope" content="profile email">
+  <a class="btn-connect-option google" href="javascript:void(0);"> Google </a>
+</div>

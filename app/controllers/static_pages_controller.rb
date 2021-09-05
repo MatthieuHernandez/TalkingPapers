@@ -33,6 +33,9 @@ class StaticPagesController < ApplicationController
   def contact
   end
 
+  def privacy_policy
+  end
+
   def display_article
   	render plain: params
   end

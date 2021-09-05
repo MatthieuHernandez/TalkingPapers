@@ -22,7 +22,11 @@
       <% end %>
 
       <div class="gravatar_edit">
-        <%= gravatar_for @user %>
+        <% if @user.picture_link? %>
+          <img alt="<%= @user.name %>" src="<%= @user.picture_link %>" width="80" height="80">
+        <% else %>
+          <%= gravatar_for @user, size: 50 %>
+        <% end %>
         <a href="https://gravatar.com/emails" target="_blank">change</a>
       </div>
       
