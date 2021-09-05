@@ -113,7 +113,6 @@ class UsersController < ApplicationController
     def verify_facebook
         begin
             url = URI.parse("https://graph.facebook.com/me?access_token=#{params[:user][:access_token]}")
-            puts("https://graph.facebook.com/me?access_token=#{params[:user][:access_token]}")
             res = Net::HTTP.get_response(url)
             result = JSON.parse(res.body)
             if result["error"] == nil && result["id"] == params[:user][:external_id]
@@ -127,7 +126,6 @@ class UsersController < ApplicationController
     def verify_google
         begin
             url = URI.parse("https://oauth2.googleapis.com/tokeninfo?id_token=#{params[:user][:access_token]}")
-            puts("===> https://oauth2.googleapis.com/tokeninfo?id_token=#{params[:user][:access_token]}")
             res = Net::HTTP.get_response(url)
             result = JSON.parse(res.body)
             if result["error"] == nil && result["sub"] == params[:user][:external_id]

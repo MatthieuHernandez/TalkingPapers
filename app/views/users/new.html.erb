@@ -2,6 +2,18 @@
 <h1>Sign up</h1>
 <div class="row">
   <div class="col-md-6 offset-md-3">
+    <div class="social-signup">
+      <div class="gray-text">
+      Sign up with a social network
+      </div>
+      <table class="connect-table"><tr>
+        <td><%= render partial: 'users/facebook_new' %></td>
+        <td><%= render partial: 'users/google_new' %></td>
+      </tr></table>
+    </div>
+    <div class="gray-text-2">
+    Sign up with an email
+    </div>
     <%= form_with(model: @user, local: true) do |f| %>
       <%= render 'shared/error_messages' %>
 
