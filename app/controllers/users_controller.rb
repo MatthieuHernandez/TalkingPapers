@@ -71,10 +71,16 @@ class UsersController < ApplicationController
         @user = User.find(params[:id])
         if @user.update(user_params)
             flash[:success] = 'Profile updated'
-            redirect_to @user
+            redirect_to user_path
         else
-            render 'edit'
+            redirect_to 'edit'
         end
+    end
+
+    def delete_avatar
+        @user = User.find(params[:id])
+        @user.avatar.purge
+        redirect_to edit_user_path(@user.id)
     end
 
     def destroy
@@ -97,7 +103,7 @@ class UsersController < ApplicationController
     private
 
     def user_params
-        params.require(:user).permit(:name, :email, :password, :password_confirmation)
+        params.require(:user).permit(:avatar, :name, :email, :password, :password_confirmation)
     end
 
     def user_params_from_provider

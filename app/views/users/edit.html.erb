@@ -3,8 +3,25 @@
 <div class="row">
   <div class="col-md-6 offset-md-3">
     <% if @user.id == @current_user&.id %>
-      <%= form_with(model: @user, local: true) do |f| %>
+      <%= form_with model: @user, local: true do |f| %>
         <%= render 'shared/error_messages' %>
+
+        <table style="margin-bottom: 15px">
+          <tr>
+            <td rowspan=2><%= render partial: 'users/profil_picture', locals: {user: @user}%></td>
+            <td>
+              <% if @user.avatar.attached? %>
+                <%= link_to 'X', delete_avatar_path(id: @user.id), method: :delete, class: 'btn btn-danger btn-x' %>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td valign="bottom" style="padding-left: 4px">
+              <a id="change_avatar" href="javascript:void(0);" onclick="displayButton();">Change</a>
+              <%= f.file_field :avatar, accept: "image/jpeg,image/gif,image/png"%>
+            </td>
+          </tr>
+        </table>
 
         <%= f.label :name, "Username" %>
         <%= f.text_field :name, class: 'form-control' %>
@@ -20,17 +37,16 @@
 
         <%= f.submit "Save changes", class: "btn btn-primary" %>
       <% end %>
-
-      <div class="gravatar_edit">
-        <% if @user.picture_link? %>
-          <img alt="<%= @user.name %>" src="<%= @user.picture_link %>" width="80" height="80">
-        <% else %>
-          <%= gravatar_for @user, size: 50 %>
-        <% end %>
-        <a href="https://gravatar.com/emails" target="_blank">change</a>
-      </div>
-      
       <%= link_to 'Delete account', '/delete', class: 'btn btn-danger btn-delete'  %>
     <% end %>
   </div>
 </div>
+
+<script type="text/javascript">
+  function displayButton() {
+    var a = document.getElementById("change_avatar");
+    var b = document.getElementById("user_avatar");
+    a.style.display = "none";
+    b.style.display = "block";
+}
+</script>

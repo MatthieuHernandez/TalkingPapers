@@ -108,6 +108,19 @@ p {
   margin-top: 12px;
 }
 
+.btn-x {
+  box-sizing: content-box;
+  vertical-align: top;
+  width: 26px;
+  margin-top: -8px;
+  margin-left: 1px;
+  padding: 0px 0px 0px 0px;
+}
+
+#change_avatar {
+  vertical-align: bottom;
+}
+
 
 /* header */
 
@@ -253,6 +266,12 @@ input, textarea, select, .uneditable-input {
   width: 100%;
   margin-bottom: 15px;
   @include box_sizing;
+}
+
+#user_avatar {
+  border: 0px !important;
+  margin-bottom: 0px;
+  display: none;
 }
 
 input {
