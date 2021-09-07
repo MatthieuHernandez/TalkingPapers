@@ -2,6 +2,8 @@
   <img alt="<%= user.name %>" src="<%= url_for(user.avatar)%>" width="80" height="80">
 <% elsif user.picture_link? %>
   <img alt="<%= user.name %>" src="<%= user.picture_link %>" width="80" height="80">
-<% else %>
+<% elsif gravatar? user.email%>
   <%= gravatar_for user, size: 50 %>
+<% else %>
+  <img alt="<%= user.name %>" src="<%= asset_path('default-avatar.png')%>" width="80" height="80">
 <% end %>
