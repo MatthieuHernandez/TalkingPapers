@@ -69,6 +69,8 @@ class UsersController < ApplicationController
 
     def update
         @user = User.find(params[:id])
+        image = MiniMagick::Image.new(params[:user][:avatar].tempfile.path)
+        image.resize "80x80!"
         if @user.update(user_params)
             flash[:success] = 'Profile updated'
             redirect_to user_path
@@ -85,7 +87,7 @@ class UsersController < ApplicationController
 
     def destroy
         if current_user && current_user.id == session[:user_id]
-            if current_user.authenticate(params[:session][:password])
+            if !current_user.provider.blank? or current_user.authenticate(params[:session][:password])
                 User.find(current_user.id).destroy
                 destroy_notes
                 flash[:success] = 'Account deleted'
@@ -113,20 +115,20 @@ class UsersController < ApplicationController
     def verify_provider
         case params[:user][:provider]
         when 'Facebook'
-            return verify_facebook
+            return verify_facebook(params[:user][:external_id], params[:user][:access_token])
         when 'Google'
-            return verify_google
+            return verify_google(params[:user][:external_id], params[:user][:access_token])
         else
             return false
         end
     end
 
-    def verify_facebook
+    def verify_facebook(id, token)
         begin
-            url = URI.parse("https://graph.facebook.com/me?access_token=#{params[:user][:access_token]}")
+            url = URI.parse("https://graph.facebook.com/me?access_token=#{token}")
             res = Net::HTTP.get_response(url)
             result = JSON.parse(res.body)
-            if result["error"] == nil && result["id"] == params[:user][:external_id]
+            if result["error"] == nil && result["id"] == id
                 return true
             end
         rescue
@@ -134,12 +136,12 @@ class UsersController < ApplicationController
         return false
      end
     
-    def verify_google
+    def verify_google(id, token)
         begin
-            url = URI.parse("https://oauth2.googleapis.com/tokeninfo?id_token=#{params[:user][:access_token]}")
+            url = URI.parse("https://oauth2.googleapis.com/tokeninfo?id_token=#{token}")
             res = Net::HTTP.get_response(url)
             result = JSON.parse(res.body)
-            if result["error"] == nil && result["sub"] == params[:user][:external_id]
+            if result["error"] == nil && result["sub"] == id
                 return true
             end
         rescue
