@@ -73,7 +73,7 @@ class UsersController < ApplicationController
             flash[:success] = 'Profile updated'
             redirect_to user_path
         else
-            redirect_to 'edit'
+            redirect_to edit_user_path(@user.id)
         end
     end
 
