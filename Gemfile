@@ -5,7 +5,7 @@ gem 'rails',                      '6.1.3.2'
 gem 'pg', '~> 1.2', '>= 1.2.3'
 gem 'tzinfo-data'
 gem 'image_processing',           '1.9.3'
-gem 'mini_magick',                '4.9.5'
+gem 'mini_magick',                '4.11.0'
 gem 'active_storage_validations', '0.8.2'
 gem 'pagedown-rails', '~> 1.1.4'
 gem "nokogiri", ">= 1.4.2"

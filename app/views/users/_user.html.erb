@@ -1,12 +1,7 @@
 <li>
-  <% if user.picture_link? %>
-    <img alt="<%= user.name %>" src="<%= user.picture_link %>" width="80" height="80">
-  <% else %>
-    <%= gravatar_for user, size: 50 %>
-  <% end %>
+  <%= render partial: 'users/profil_picture', locals: {user: user}%>
   <%= link_to user.name, user, "data-turbo":false %>
   <% if current_user.admin? && !current_user?(user) %>
     | <%= link_to "delete", user, method: :delete, data: { confirm: "You sure?" } %>
   <% end %>
-
 </li>

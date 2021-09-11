@@ -12,6 +12,16 @@ class User < ApplicationRecord
   has_many :notes
   has_many :articles_with_notes, :through => :notes, :source => :article
   has_many :comments
+  has_one_attached :avatar
+  validates :avatar,   content_type: { in: %w[image/jpeg image/gif image/png],
+    message: "must be a valid image format" },
+size:         { less_than: 5.megabytes,
+    message:   "should be less than 5MB" }
+
+  def display_avatar
+    avatar.variant(resize_to_limit: [80, 80])
+  end
+
   # Returns the hash digest of the given string.
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :

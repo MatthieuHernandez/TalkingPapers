@@ -28,7 +28,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbo-track': 'reload' %>
+    <%= javascript_include_tag 'application' %>
     <%= render 'layouts/shim' %>
     <% if (params[:controller] == 'users' and params[:action] == 'show') or (params[:controller] == 'static_pages' and params[:action] == 'home') %>
       <meta name="turbo-visit-control" content="reload">
