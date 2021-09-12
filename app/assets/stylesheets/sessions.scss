@@ -26,12 +26,12 @@
 }
 
 a.btn-connect-option.facebook {
-    background: #4367b0 url(/assets/btn-connect-option.png) -10px -10px/60px 120px no-repeat;
+    background: #4367b0 image-url("btn-connect-option.png") -10px -10px/60px 120px no-repeat;
     margin-right: 20px;
 }
 
 a.btn-connect-option.google {
-    background: #4585f1 url(/assets/btn-connect-option.png) -10px -70px/60px 120px no-repeat;
+    background: #4585f1 image-url("btn-connect-option.png") -10px -70px/60px 120px no-repeat;
 }
 
 a.btn-connect-option.google:hover {
