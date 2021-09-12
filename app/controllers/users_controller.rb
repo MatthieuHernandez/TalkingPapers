@@ -69,8 +69,10 @@ class UsersController < ApplicationController
 
     def update
         @user = User.find(params[:id])
-        image = MiniMagick::Image.new(params[:user][:avatar].tempfile.path)
-        image.resize "80x80!"
+        if(params[:user][:avatar].present?)
+            image = MiniMagick::Image.new(params[:user][:avatar].tempfile.path)
+            image.resize "80x80!"
+        end
         if @user.update(user_params)
             flash[:success] = 'Profile updated'
             redirect_to user_path
