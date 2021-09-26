@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails',                      '6.1.3.2'
+gem 'rails',                      '6.1.4.1'
 gem 'pg', '~> 1.2', '>= 1.2.3'
 gem 'tzinfo-data'
 gem 'image_processing',           '1.9.3'
