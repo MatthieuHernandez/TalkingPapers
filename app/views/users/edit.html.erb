@@ -18,7 +18,7 @@
           <tr>
             <td valign="bottom" style="padding-left: 4px">
               <a id="change_avatar" href="javascript:void(0);" onclick="displayButton();">Change</a>
-              <%= f.file_field :avatar, accept: "image/jpeg,image/gif,image/png"%>
+              <%= f.file_field :avatar, accept: "image/jpeg,image/gif,image/png", direct_upload: true %>
             </td>
           </tr>
         </table>

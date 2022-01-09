@@ -35,7 +35,7 @@
           <%= form.label :note_text, 'Take a note (Markdown and LaTeX [use $$ to start and end] supported):' %><br>
           <%= form.text_area :note_text, size: "20x13", class: "form-control", id: "textInput" %>
           <span class = "image">
-            <%= form.file_field :image, accept: "image/jpeg,image/gif,image/png" %>
+            <%= form.file_field :image, accept: "image/jpeg,image/gif,image/png", direct_upload: true %>
           </span>
         </div>
         <div class='form-group col-md-3'>

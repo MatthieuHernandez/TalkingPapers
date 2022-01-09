@@ -19,7 +19,7 @@ gem 'jquery-rails'
 gem 'turbo-rails'
 gem 'puma',       '4.3.5'
 gem 'sass-rails', '6.0.0'
-gem 'webpacker',  '4.2.2'
+gem 'webpacker',  '5.4.3'
 gem 'jbuilder',   '2.10.0'
 gem 'bootsnap',   '1.4.6', require: false
 gem "aws-sdk-s3", require: false
@@ -48,9 +48,10 @@ group :test do
   gem 'guard-minitest',           '2.4.6'
 end
 
-#group :production do
-#  gem 'aws-sdk-s3', '1.46.0', require: false
-#end
+group :production do
+  gem 'cloudinary'
+  gem 'activestorage-cloudinary-service'
+end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 # Uncomment the following line if you're running Rails
