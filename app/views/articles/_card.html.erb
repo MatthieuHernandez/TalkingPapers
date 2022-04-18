@@ -68,17 +68,23 @@ note_cat = note.note_type.to_s.capitalize %>
             <% end %>
           </br></br>
 
-        <% if query == "public" %>
-        <ul class = "modal_comments">
-          <h5>Comments</h5> 
-          <% if note.comments_texts.first.nil? %>
-            No comments yet! Click "Comment" below to add some.
-          <% else %>
-          <% note.comments_texts.each do |comment_text| %>
-            <li> <%== comment_text %>
-            <% end %>
-          </ul>
-        <% end %>
+          <% if query == "public" %>
+            <ul class = "modal_comments">
+              <h5>Comments</h5> 
+              <% if note.comments.first.nil? %>
+                No comments yet! Click "Comment" below to add some.
+              <% else %>
+                <% note.comments.each do |comment| %>
+                <li> <%== comment.comment_text %>
+                  </br>
+                  <% if !current_user.nil? and current_user.id == comment.user_id %>
+                    <%= link_to 'Delete', comment_path(article_id: article_id, id: comment.id, query: "public"), method: :delete,
+                                    data: { confirm: 'Are you sure you want to delete this comment?' }, style: "float: right;" %>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
         <% end %>
 
       </div>
