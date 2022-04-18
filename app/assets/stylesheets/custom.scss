@@ -477,6 +477,7 @@ input[type="radio"] {
 
 .search-card {
   border: 1px solid $secondary-dark;
+  border-radius: 0.3rem 0rem 0rem 0rem;
 }
 
 .card {
@@ -531,6 +532,13 @@ span.image {
     padding:20px;
 }
 
+.recent-papers-div {
+  padding: 32px;
+  margin-bottom: 2rem;
+  background-color: $secondary;
+  border-radius: 0rem 0rem 0.3rem 0.3rem;
+}
+
 /* search bar */
 .search-container {
   float: right;
@@ -542,11 +550,11 @@ span.image {
   float: left;
   width: 190px !important;
   border-width: 1px 0px 1px 1px;
-  border-radius: 0.25rem 0rem 0rem 0.25rem;
+  border-radius: 0.3rem 0rem 0rem 0.3rem;
 }
 
 .search-container button {
   float: left;
   font-size: 1.0em;
-  border-radius: 0rem 0.25rem 0.25rem 0rem;
+  border-radius: 0rem 0.3rem 0.3rem 0rem;
 }
