@@ -9,6 +9,7 @@
 - Ruby on Rails
   - install [Ruby 2.7](https://www.ruby-lang.org/)
   - run `gem install rails`
+  - run `gem install rake`
   - run `gem install bundle`
   - clone the repository
   - run `rails server` from talkingpaper GitHub folder
@@ -16,7 +17,9 @@
   - install postgres 12
   - run `"C:\Program Files\PostgreSQL\12\bin\pg_ctl" -D "C:\Program Files\PostgreSQL\12\data" start`
   - run `rake db:create`
-- `npm install --global yarn`
+- Node.js
+  - install Node.js
+  - run `npm install --global yarn`
 
 - go to http://127.0.0.1:3000/
 
